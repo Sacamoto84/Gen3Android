@@ -52,6 +52,7 @@ import com.example.generator2.ui.wiget.InfinitiSlider
 import com.example.generator2.ui.wiget.UImodifier.coloredShadow2
 import com.example.generator2.ui.wiget.UIspinner.Spinner
 import com.example.generator2.ui.wiget.UIswitch.ON_OFF
+import com.example.generator2.ui.wiget.format
 import com.jortas.sunriseslider.ProjColors
 import com.siddroid.holi.brushes.GradientMixer
 import com.smarttoolfactory.slider.ColorfulSlider
@@ -286,8 +287,8 @@ class MainActivity : ComponentActivity() {
                                 Text(text = value.toString())
 
 
-                                
-                                
+
+
                                 Row(
                                     modifier = Modifier
                                         .fillMaxWidth()
@@ -355,28 +356,7 @@ class MainActivity : ComponentActivity() {
                                     )
 
 
-                                    EncoderLine(
-                                        modifier = Modifier
-                                            .padding(start = 32.dp)
-                                            .size(80.dp, 80.dp),
-                                        //.background(color = Color.Red)
-                                        //.scale(1f)
 
-                                        imageThump = ImageBitmap.imageResource(id = R.drawable.knob8thumb),
-                                        imageThumpSize = 10.dp,
-                                        imageThumbOffset = Offset(0f, -20f),
-
-                                        imageBG = ImageBitmap.imageResource(id = R.drawable.knob8bg),   //Неподвижная часть
-                                        imageBGSize = 100.dp,
-                                        imageBGOffset = Offset(10f, 7f),
-
-                                        //drawMeasureLine = true,
-                                        //drawMeasureCircle = true,
-                                        //drawMeasureDot = true
-                                        sensitivity = 0.4f,
-                                        onValueChange = { sliderPosition = it },
-                                        value = sliderPosition
-                                    )
 
 
                                     EncoderLine(
@@ -405,16 +385,6 @@ class MainActivity : ComponentActivity() {
                                     )
                                 }
 
-                                InfinitiSlider(
-                                    modifier = Modifier
-                                        .padding(start = 32.dp)
-                                        .size(150.dp, 50.dp),//.background(Color.Red)
-                                    sensing = 0.01f,
-                                    image = ImageBitmap.imageResource(id = R.drawable.base),  //Фоновая картинка, неподвижная
-                                    rangeAngle = 1000f,
-                                    value = sliderPosition, //Вывод icrementalAngle от 0 до rangeAngle при rangeAngle != 0, и от +- Float при rangeAngle = 0
-                                    onValueChange = { sliderPosition = it },
-                                )
 
                                 var st by remember { mutableStateOf("Privet") }
                                 var count by remember { mutableStateOf(0) }
@@ -423,79 +393,120 @@ class MainActivity : ComponentActivity() {
                                 //GreenLCD(value = "&%:${sliderPosition.format(0)}Hz")
 
                                 Button(onClick = { st = "Ment$%&" }) {}
-                                Button(onClick = { st = "Savenkov" }) {}
-
-
 
 
                                 //ImageAsset( path = "png/yes1.png")
 
 
-                                var currentTime by remember {
-                                    mutableStateOf(1000)
-                                }
-                                var isTimerRunning by remember {
-                                    mutableStateOf(false)
-                                }
+                                Row {
+
+
+                                    Button(onClick = { st = "Savenkov" }) {}
 
 
 
-                                val lcd = GreenLCD48()
-                                lcd.clear()
+                                    Column() {
+
+                                        var currentTime by remember {
+                                            mutableStateOf(1000)
+                                        }
+                                        var isTimerRunning by remember {
+                                            mutableStateOf(false)
+                                        }
+                                        val lcd = GreenLCD48()
+                                        lcd.clear(1)
+                                        //lcd.drawGliph('&'.toByte(), 41, 9, 1)
+                                        lcd.drawGliph('&', 1, 1)
+                                        lcd.string(9, 0, value = "${sliderPosition.format(1)}")
+                                        lcd.string(40, 0, "Hz")
+                                        lcd.string(0, 9, "SINUS")
+                                        //lcd.drawGliph('5'.toByte(), 0, 5)
 
 
-                                lcd.drawGliph('1'.toByte(), 5, 1)
-                                lcd.drawGliph('2'.toByte(), 11, 2)
-                                lcd.drawGliph('3'.toByte(), 15, 3)
-                                lcd.drawGliph('4'.toByte(), 20, 4)
-                                lcd.drawGliph('5'.toByte(), 25, 5)
-                                lcd.drawGliph('6'.toByte(), 12, 6)
-                                lcd.drawGliph('7'.toByte(), 30, 7)
-                                lcd.drawGliph('%'.toByte(), 35, 8)
-                                lcd.drawGliph('&'.toByte(), 41, 9)
-                                //print("\n-------->LaunchedEffect\n")
+                                        //print("\n-------->LaunchedEffect\n")
 
+                                        var update by remember {
+                                            mutableStateOf(false)
+                                        }
 
+                                        if (update) {
 
+                                            //lcd.drawGliph('6'.toByte(), 12, 1)
+                                            //lcd.drawGliph('%'.toByte(), 41, 1)
+                                            //lcd.setPixel(0,0,1)
+                                        } else {
+                                            //lcd.drawGliph('5'.toByte(), 12, 1)
+                                            //lcd.drawGliph('&'.toByte(), 41, 1)
+                                            //lcd.setPixel(0,0,0)
+                                        }
 
+                                        LaunchedEffect(key1 = true, key2 = isTimerRunning) {
 
+                                            while (true) {
+                                                print("-------->\n")
+                                                delay(1000L)
+                                                //update = !update
+                                            }
+                                        }
+                                        lcd.render(
+                                            update,
+                                            modifier = Modifier.padding(start = 0.dp)
+                                        )
 
-                                var update by remember {
-                                    mutableStateOf(false)
-                                }
-
-
-                                if (update){
-
-                                    //lcd.drawGliph('6'.toByte(), 12, 1)
-                                    //lcd.drawGliph('%'.toByte(), 41, 1)
-                                    //lcd.setPixel(0,0,1)
-                                }
-                                else
-                                {
-                                    //lcd.drawGliph('5'.toByte(), 12, 1)
-                                    //lcd.drawGliph('&'.toByte(), 41, 1)
-                                    //lcd.setPixel(0,0,0)
-                                }
-
-
-
-                                LaunchedEffect(key1 = true, key2 = isTimerRunning) {
-
-                                    while(true)
-                                    {
-                                        print("-------->\n")
-                                        delay(1000L)
-                                        //update = !update
+                                        InfinitiSlider(
+                                            modifier = Modifier
+                                                .padding(start = 0.dp)
+                                                //.size(40.dp, 40.dp),//.background(Color.Red)
+                                                .height(20.dp).width(140.dp),
+                                            sensing = 0.01f,
+                                            image = ImageBitmap.imageResource(id = R.drawable.base),  //Фоновая картинка, неподвижная
+                                            rangeAngle = 1000f,
+                                            value = sliderPosition, //Вывод icrementalAngle от 0 до rangeAngle при rangeAngle != 0, и от +- Float при rangeAngle = 0
+                                            onValueChange = { sliderPosition = it },
+                                        )
                                     }
+
+
+
+
+
+
+
+
+
+
+
+                                    Column()
+                                    {
+
+
+                                        EncoderLine(
+                                            modifier = Modifier
+                                                .padding(start = 0.dp)
+                                                .size(80.dp, 80.dp),
+                                            //.background(color = Color.Red)
+                                            //.scale(1f)
+
+                                            imageThump = ImageBitmap.imageResource(id = R.drawable.knob8thumb),
+                                            imageThumpSize = 10.dp,
+                                            imageThumbOffset = Offset(0f, -20f),
+
+                                            imageBG = ImageBitmap.imageResource(id = R.drawable.knob8bg),   //Неподвижная часть
+                                            imageBGSize = 100.dp,
+                                            imageBGOffset = Offset(10f, 7f),
+
+                                            //drawMeasureLine = true,
+                                            //drawMeasureCircle = true,
+                                            //drawMeasureDot = true
+                                            sensitivity = 0.4f,
+                                            onValueChange = { sliderPosition = it },
+                                            value = sliderPosition
+                                        )
+
+                                    }
+
+
                                 }
-
-
-                                lcd.render(update, modifier = Modifier.padding(start = 16.dp))
-
-
-
-
 
 
                             }

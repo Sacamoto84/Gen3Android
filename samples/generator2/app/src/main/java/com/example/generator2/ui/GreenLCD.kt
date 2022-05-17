@@ -12,13 +12,11 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.FilterQuality
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.example.generator2.Image9Patch
 import com.example.generator2.R
-import kotlinx.coroutines.delay
 
 
 private const val sizeDot = 9f//11f       //Размер точки
@@ -46,8 +44,7 @@ private const val colorText = 0x23c1ff//0x1d9fd2
 //private const val colorPlug = 0xb8b8b8
 //private const val colorText = 0
 
-
-class GreenLCD48(lcdHeight: Dp = 156.dp) {
+class GreenLCD48(lcdHeight: Dp = 80.dp) {
 
     private lateinit var bitmapBg: Bitmap //Фоновый бэкграунд
     private lateinit var bitmap: Bitmap
@@ -56,18 +53,18 @@ class GreenLCD48(lcdHeight: Dp = 156.dp) {
 
     //private val koef = 380f / 98f
 
-
-
     private val origW = 700f //Размер Canvas
-    private val origH = 450f//155f //10  -> 155f
+    private val origH = 278f//155f //10  -> 155f
 
     private val koef = origW / origH
 
     private val segmentX = 53 //Количество сигментов по высоте
-    private val segmentY = 32 //10 //Количество сигментов по высоте
+    private val segmentY = 18 //10 //Количество сигментов по высоте
 
     //Пиксельный буффер
     private val bufferLcd = Array(segmentY) { Array(segmentX) { 0 } }
+
+    var textPosition : Int = 0 //Позиция для строки
 
 
     init {
@@ -92,11 +89,11 @@ class GreenLCD48(lcdHeight: Dp = 156.dp) {
     }
 
     //Очистка слоя пикселей
-    fun clear() {
+    fun clear(color : Int = 0) {
 
         val paint = Paint()
 
-        paint.color = colorPlug
+        paint.color = if (color == 0) colorPlug else color
         paint.alpha = 255
 
         for (ii in 0 until segmentY) {
@@ -120,7 +117,7 @@ class GreenLCD48(lcdHeight: Dp = 156.dp) {
 
     //Нарисовать глиф по нужному адресу
     fun drawGliph(
-        ch: Byte,
+        ch: Char,
         x: Int,
         y: Int,
         color: Int = 1
@@ -128,13 +125,15 @@ class GreenLCD48(lcdHeight: Dp = 156.dp) {
         val paint = Paint()
         paint.color = colorText
         paint.alpha = 255
-        if (ch < 32) return
-        val maxI = 8 - y
-        for (i in 0..maxI) {
-            val b = Font7x10[(ch - 32) * 10 + i]
+        if (ch < 32.toChar()) return
+        val ch1 :Byte = ch.toByte()
+
+        //val maxI = segmentY - y
+        for (i in 0..8) {
+            val b = Font7x10[(ch1 - 32) * 10 + i]
             for (j in 0..6) {
                 if (b.shl(j).and(0x8000) != 0) {
-                    setPixel(x + j, y + i, color)
+                    setPixel((x + j), (y + i), color)
                 }
             }
         }
@@ -234,110 +233,35 @@ class GreenLCD48(lcdHeight: Dp = 156.dp) {
 
 
 
-}
-
-
-@Composable
-fun GreenLCD(
-    value: String,
-    modifier: Modifier = Modifier,
-
-    ) {
-    val height = 48.dp
-    val koef = 380f / 98f
-
-    val origW = 700f //Размер Canvas
-    val origH = 155f
-
-    Box(
-        modifier = Modifier
-            .size(height * koef, height)
-            .then(modifier), contentAlignment = Alignment.Center
-    )
-    {
-        val bmp: Bitmap = greenLCDBitmap(origW, origH, value)
-
-        Image(
-            bitmap = greenLCDBitmap(origW, origH, value).asImageBitmap(),
-            contentDescription = " ",
-            modifier = Modifier
-                .padding(start = 2.dp, end = 2.dp)
-                .scale(1f)
-                .offset((1).dp, (-1).dp)
-                .fillMaxSize(),
-            contentScale = ContentScale.Fit,
-            filterQuality = FilterQuality.High
-        )
-
-        Image(
-            painterResource(id = R.drawable.masklcd20),
-            contentDescription = "",
-            contentScale = ContentScale.Fit, // or some other scale
-            modifier = Modifier.fillMaxSize(),
-        )
-
-
-    }
-}
-
-
-fun greenLCDBitmap(W: Float = 100f, H: Float = 100f, value: String): Bitmap {
-    val bitmap = Bitmap.createBitmap(W.toInt(), H.toInt(), Bitmap.Config.ARGB_8888)
-
-    val canvas = Canvas(bitmap)
-    val paint = Paint()
-    paint.color = colorBg
-    paint.alpha = 255
-
-    canvas.drawRoundRect(0f, 0f, W - 1f, H - 1f, 14f, 14f, paint)
-
-    paint.color = colorPlug
-    paint.alpha = 255
-
-    paint.color = colorText
-    paint.alpha = 255
-    paint.isAntiAlias = true
-    paint.strokeWidth = 12.0f
-
-    val strlocal: String = "        "
-
-    var len = value.length - 1
-    if (len > 7) len = 7
-
-    val r1 = strlocal.toCharArray().let {
-        for (i in 0..len)
-            it[i] = value[i]
-        String(it)
+    fun string(x: Int, y: Int, value: String, color : Int = 1) {
+        var len = value.length - 1
+        //if (len > 7) len = 7
+        textPosition = 0
+        for(i in 0..len) {
+            //Нарисовать глиф по нужному адресу
+            drawGliph(
+                value[i],
+                x + textPosition,
+                y,
+                color
+            )
+            textPosition += 5
+        }
     }
 
-    return bitmap
+
 }
+
+
 
 private fun Canvas.drawRectXY(x: Float, y: Float, H: Float = 100f, W: Float = 100f, paint: Paint) {
     this.drawRect(x, y, x + W, y + H, paint)
 }
 
-@Composable
-@Preview
-fun GreenLCD_Preview() {
-    val lcd = GreenLCD48()
 
-    Column {
-        //GreenLCD(value = "Heee")
-        lcd.drawGliph('&'.toByte(), 1, 1)
-        //lcd.drawGliph('0'.toByte(), 0, 1)
-        //lcd.drawGliph('1'.toByte(), 5, 1)
-        //lcd.drawGliph('2'.toByte(), 11, 1)
-        //lcd.drawGliph('3'.toByte(), 15, 1)
-        //lcd.drawGliph('4'.toByte(), 20, 1)
-        //lcd.drawGliph('5'.toByte(), 25, 1)
-        //lcd.drawGliph('6'.toByte(), 12, 1)
-        //lcd.drawGliph('7'.toByte(), 30, 1)
-        //lcd.drawGliph('8'.toByte(), 35, 1)
-        //lcd.drawGliph('9'.toByte(), 40, 1)
-        lcd.render(true)
-    }
-}
+
+
+
 
 
 val Font7x10 = intArrayOf(
@@ -437,3 +361,18 @@ val Font7x10 = intArrayOf(
     0x3000, 0x1000, 0x1000, 0x1000, 0x0800, 0x0800, 0x1000, 0x1000, 0x1000, 0x3000,  // }
     0x0000, 0x0000, 0x0000, 0x7400, 0x4C00, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000   // ~
 )
+
+@Composable
+@Preview
+fun GreenLCD_Preview() {
+    val lcd = GreenLCD48()
+
+    Column {
+        lcd.clear(1)
+        lcd.drawGliph('&', 1, 1)
+        lcd.string(9,0,"1000.0")
+        lcd.string(40,0,"Hz")
+        lcd.string(0,9,"sinus charp")
+        lcd.render(true)
+    }
+}
