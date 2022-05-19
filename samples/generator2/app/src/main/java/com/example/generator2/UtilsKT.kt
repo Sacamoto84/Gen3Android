@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
@@ -87,3 +88,14 @@ fun getBitmapFromAsset(context: Context, filePath: String?): Bitmap? {
     return bitmap
 }
 ///////////////////////////////////////////////////////////////////////////////////////
+
+
+fun Float.format(digits: Int) = "%.${digits}f".format(this)
+
+
+fun log(text : String)
+{
+
+    Global.log.add(LogMessage(text))
+}
+

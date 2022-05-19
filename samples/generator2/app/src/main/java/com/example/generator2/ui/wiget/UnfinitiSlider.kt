@@ -20,6 +20,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.*
+import com.example.generator2.format
 import kotlin.math.PI
 import kotlin.math.acos
 import kotlin.math.roundToInt
@@ -98,4 +99,3 @@ fun InfinitiSlider(
 
 }
 
-fun Float.format(digits: Int) = "%.${digits}f".format(this)

@@ -60,17 +60,9 @@ object UIspinner {
             if (element.name == currentValue) indexBitmapCurrent.value = index
         }
 
-        //Card(
-        //    shape = RoundedCornerShape(10.dp),
-        //    backgroundColor = if (transparrent)  Color.Transparent else  Color(0xff454954)  ,
-        //    //elevation = 10.dp,
-        //    //modifier = Modifier.padding(10.dp)
-        //)
-        //{
             Box(modifier = Modifier
-                .height(60.dp)
-                .fillMaxWidth()
-                .background(Color.Transparent).then(modifier)
+                .fillMaxSize()
+                .background(Color.Transparent).then(modifier), contentAlignment = Alignment.Center
             )
             {
                     Row(modifier = Modifier
@@ -79,23 +71,27 @@ object UIspinner {
                         }
                         .background(  color = if (transparrent)  Color(0x0) else Color(0xFF24252A))
                         ,
+                        //horizontalAlignment = Alignment.CenterHorizontally,
                         verticalAlignment = Alignment.CenterVertically
-                        ,
+                        //,
                         //.align(Alignment.Center)
                     )
                     {
 
 
+
+
                         Image(
                             bitmap = itemlist[indexBitmapCurrent.value].bitmap.asImageBitmap(),
                             contentDescription = null
-                            ,modifier = Modifier.width( 128.dp )
+                            ,modifier = Modifier.width( 128.dp ).height(64.dp)
                         )
-                        Text(text = currentValue, modifier = Modifier
-                            .weight(1f), color = Color(0xFFE7E1D5)
+
+                        Text(text = currentValue, modifier = Modifier.fillMaxWidth().padding(start=8.dp).weight(1f)
+                            , color = Color(0xFFE7E1D5)
                             , fontSize = 24.sp, textAlign = TextAlign.Center)
 
-                        Icon(imageVector = Icons.Filled.ArrowDropDown, contentDescription = null, modifier = Modifier.width( 16.dp ), tint = Color(0xFFE7E1D5))
+                        Icon(imageVector = Icons.Filled.ArrowDropDown, contentDescription = null, modifier = Modifier.width( 32.dp ), tint = Color(0xFFE7E1D5))
 
                         DropdownMenu(expanded = expanded.value, onDismissRequest = {
                             expanded.value = false

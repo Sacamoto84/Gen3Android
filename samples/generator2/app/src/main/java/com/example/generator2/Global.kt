@@ -32,14 +32,14 @@ object Global : ViewModel(){
 
     var ch1_EN                 = MutableLiveData<Boolean>( true)         //: MutableState<Int> = mutableStateOf( 1)
     var ch1_Carrier_Filename   = MutableLiveData<String> ( "03_HWave2")
-    var ch1_Carrier_Fr         = MutableLiveData<Int>    ( 2000) //Частота несущей
+    var ch1_Carrier_Fr         = MutableLiveData<Float>    ( 2000.0f) //Частота несущей
     var ch1_AM_EN              = MutableLiveData<Boolean>( false)
     var ch1_AM_Filename        = MutableLiveData<String> ( "09_Ramp")
     var ch1_AM_Fr              = MutableLiveData<Float>  ( 8.7f)
     var ch1_FM_EN              = MutableLiveData<Boolean>( false)
     var ch1_FM_Filename        = MutableLiveData<String> ( "06_CHIRP")
-    var ch1_FM_Base            = MutableLiveData<Int>    ( 2500) //Частота базы
-    var ch1_FM_Dev             = MutableLiveData<Int>    ( 1100) //Частота базы
+    var ch1_FM_Base            = MutableLiveData<Float>    ( 2500f) //Частота базы
+    var ch1_FM_Dev             = MutableLiveData<Float>    ( 1100f) //Частота базы
     var ch1_FM_Fr              = MutableLiveData<Float>  ( 5.1f)
 
     var ch2_EN                 = MutableLiveData<Boolean>( false)
@@ -61,6 +61,11 @@ object Global : ViewModel(){
     val onoffconfig  : ConfigOnOff = ConfigOnOff()
     val onoffconfig1 : ConfigOnOff = ConfigOnOff()
 
+    val log       =  mutableStateListOf<LogMessage>()
+
+    val colorline =  mutableStateListOf<List <pairTextAndColor>>()
+
+
     fun init()
     {
 
@@ -74,8 +79,6 @@ object Global : ViewModel(){
         Utils.patchDocument = patchDocument
         Utils.patchCarrier  = patchCarrier
         Utils.patchMod      = patchMod
-
-
 
         try {
             AssetCopier(contextActivity) //.withFileScanning()

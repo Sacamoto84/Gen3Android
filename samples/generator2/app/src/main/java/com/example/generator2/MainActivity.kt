@@ -9,28 +9,24 @@ import androidx.activity.compose.setContent
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.*
-import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
-import androidx.compose.material.ButtonDefaults.buttonColors
+import androidx.compose.material.Button
+import androidx.compose.material.Text
 import androidx.compose.runtime.*
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.scale
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.*
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.TileMode
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.drawscope.rotate
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.res.imageResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -41,24 +37,10 @@ import coil.decode.GifDecoder
 import coil.decode.ImageDecoderDecoder
 import com.example.generator2.Global.onoffconfig
 import com.example.generator2.Global.onoffconfig1
-import com.example.generator2.ui.GreenLCD48
-import com.example.generator2.ui.slider.SliderColors
-import com.example.generator2.ui.slider.SliderDefaults
-import com.example.generator2.ui.slider.SunriseSlider
 import com.example.generator2.ui.slider.SunriseSliderColors
 import com.example.generator2.ui.theme.Generator2Theme
-import com.example.generator2.ui.wiget.EncoderLine
-import com.example.generator2.ui.wiget.InfinitiSlider
 import com.example.generator2.ui.wiget.UImodifier.coloredShadow2
-import com.example.generator2.ui.wiget.UIspinner.Spinner
-import com.example.generator2.ui.wiget.UIswitch.ON_OFF
-import com.example.generator2.ui.wiget.format
 import com.jortas.sunriseslider.ProjColors
-import com.siddroid.holi.brushes.GradientMixer
-import com.smarttoolfactory.slider.ColorfulSlider
-import com.smarttoolfactory.slider.MaterialSliderDefaults
-import com.smarttoolfactory.slider.SliderBrushColor
-import kotlinx.coroutines.delay
 
 
 enum class BikePosition {
@@ -164,447 +146,463 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             Generator2Theme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    //color = Color(0xff2E3138) //MaterialTheme.colors.background
-                    color = Color(0xFF897F7F) //MaterialTheme.colors.background
-                ) {
 
-                    Image(
-                        painterResource(id = R.drawable.spire),
-                        contentDescription = "",
-                        contentScale = ContentScale.FillBounds, // or some other scale
-                        modifier = Modifier.fillMaxSize()
-                    )
 
-                    Column(
-                        Modifier
-                            .verticalScroll(rememberScrollState())
-                            .recomposeHighlighter()
-                    ) {
-
-
-                        Card(
-                            shape = RoundedCornerShape(20.dp),
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(8.dp),
-                            //.height(200.dp)
-                            //, backgroundColor = Color(0x00000000)
-                            //backgroundColor = Color(0xff40434A),
-                            //backgroundColor = Color(0xFFB9ABAC)
-
-
-                            elevation = 10.dp,
-                            //modifier = Modifier
-                        ) {
-
-
-                            val bC: ButtonColors = buttonColors(
-                                contentColor = Color(0xFFE7E1D5),
-                                backgroundColor = Color(0xFF29A1D3)
-                            )
-
-                            Column(
-                                modifier = Modifier.background(
-                                    brush = GradientMixer.vertical(
-                                        Color(
-                                            0xFFDEDDDF
-                                        ), Color(0xFFC0BFC2)
-                                    )
-                                )
-                            ) {
-
-                                Row(
-                                    //modifier = Modifier.background(Color.Red)
-                                ) {
-
-                                    val r1 by Global.ch1_EN.observeAsState()
-                                    ON_OFF(state = r1!!, config = onoffconfig1, onClick = {
-                                        Global.ch1_EN.value = !Global.ch1_EN.value!!
-                                    }, modifier = Modifier.padding(start = 8.dp, top = 30.dp))
-
-
-                                    Box(
-                                        modifier = Modifier.padding(
-                                            top = 8.dp,
-                                            end = 8.dp,
-                                            start = 8.dp
-                                        )
-                                    )
-                                    {
-                                        Image9Patch(R.drawable.bg1, 310.dp, 70.dp)
-                                        Spinner(
-                                            "CH0",
-                                            "CR",
-                                            transparrent = true,
-                                            modifier = Modifier.padding(start = 4.dp, top = 5.dp)
-                                        )
-                                    }
-
-                                }
-
-                                //Spacer(modifier = Modifier.height(16.dp))
-
-                                val sColor: SliderColors = SliderDefaults.colors(
-                                    thumbColor = Color(0xFFF7F6F2),
-                                    activeTrackColor = Color(0xFF007CBC),//(0xFFF1B018),
-                                    inactiveTrackColor = Color(0xFF24252A),
-                                )
-
-                                var sliderPosition by remember { mutableStateOf(0f) }
-
-                                Box() {
-                                    Text(text = sliderPosition.toString())
-                                    Slider(
-                                        value = sliderPosition,
-                                        onValueChange = { sliderPosition = it },
-                                        valueRange = 0f..360f,
-                                        //colors = sColor,
-                                        modifier = Modifier.padding(start = 60.dp, end = 60.dp)
-                                    )
-                                }
-
-                                ColorfulSlider(
-                                    modifier = Modifier.padding(start = 60.dp, end = 60.dp),
-                                    value = sliderPosition,
-                                    thumbRadius = 10.dp,
-                                    trackHeight = 10.dp,
-                                    onValueChange = { it ->
-                                        sliderPosition = it
-                                    },
-                                    colors = MaterialSliderDefaults.materialColors(
-                                        inactiveTrackColor = SliderBrushColor(color = Color.Transparent),
-                                        //activeTrackColor = SliderBrushColor(
-                                        //    brush = sunriseGradient(),
-                                        //)
-                                    ),
-                                    //borderStroke = BorderStroke(2.dp, sunriseGradient())
-                                )
-
-                                var value by remember { mutableStateOf(-0.5f) }
-                                Text(text = value.toString())
-
-
-
-
-                                Row(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        //.wrapContentHeight()
-                                        .padding(60.dp)
-                                ) {
-
-                                    val sunriseSliderColors = sunriseSliderColorsDefault()
-
-                                    val interactionSource = remember { MutableInteractionSource() }
-                                    val wasPressed = interactionSource.collectIsPressedAsState()
-                                    var enabledValue by remember { mutableStateOf(false) }
-
-                                    var values by remember { mutableStateOf(valuesList()) }
-                                    var steps by remember { mutableStateOf(10) }
-                                    var valueRange: ClosedFloatingPointRange<Float>? by remember {
-                                        mutableStateOf(
-                                            null
-                                        )
-                                    }
-                                    val onValueChangeFinished by remember { mutableStateOf({}) }
-                                    val tutorialEnabled by remember { mutableStateOf(true) }
-
-                                    if (!enabledValue && wasPressed.value) {
-                                        enabledValue = true
-                                    }
-
-
-
-                                    SunriseSlider(
-                                        value = sliderPosition,
-                                        onValueChange = { sliderPosition = it },
-                                        //colors = sColor,
-                                        modifier = Modifier.padding(start = 60.dp, end = 60.dp)
-                                    )
-
-
-                                }
-
-
-                                Row() {
-
-
-                                    EncoderLine(
-                                        modifier = Modifier
-                                            .padding(start = 32.dp)
-                                            .size(80.dp, 80.dp),
-                                        //.background(color = Color.Red)
-                                        //.scale(1f)
-
-                                        imageThump = ImageBitmap.imageResource(id = R.drawable.knob2thumb),
-                                        imageThumpSize = 90.dp,
-                                        imageThumbOffset = Offset(0f, 0f),
-
-                                        imageBG = ImageBitmap.imageResource(id = R.drawable.knob2bg),   //Неподвижная часть
-                                        imageBGSize = 100.dp,
-                                        imageBGOffset = Offset(0f, 0f),
-
-                                        //drawMeasureLine = true,
-                                        //drawMeasureCircle = true,
-                                        //drawMeasureDot = true
-                                        sensitivity = 0.4f,
-                                        onValueChange = { sliderPosition = it },
-                                        value = sliderPosition
-                                    )
-
-
-
-
-
-                                    EncoderLine(
-                                        modifier = Modifier
-                                            //.padding(start = 32.dp, bottom = 64.dp)
-                                            .size(100.dp, 100.dp)
-                                            //.background(color = Color.Red)
-                                            .scale(0.5f),
-                                        imageThump = ImageBitmap.imageResource(id = R.drawable.knob1thumb),
-                                        imageThumpSize = 20.dp,
-                                        imageThumbOffset = Offset(0f, -40f),
-
-                                        imageBG = ImageBitmap.imageResource(id = R.drawable.knob1bg),   //Неподвижная часть
-                                        imageBGSize = 100.dp,
-                                        imageBGOffset = Offset(0f, 1f),
-
-                                        //drawMeasureLine = true,
-                                        //drawMeasureCircle = true,
-                                        //drawMeasureDot = true
-
-                                        rangeAngle = 180f + 90f, //Диапазон
-                                        offsetAngle = -135f, //Смещение начала
-                                        sensitivity = 0.4f,
-                                        onValueChange = { sliderPosition = it },
-                                        value = sliderPosition
-                                    )
-                                }
-
-
-                                var st by remember { mutableStateOf("Privet") }
-                                var count by remember { mutableStateOf(0) }
-
-                                //GreenLCD(value = st)
-                                //GreenLCD(value = "&%:${sliderPosition.format(0)}Hz")
-
-                                Button(onClick = { st = "Ment$%&" }) {}
-
-
-                                //ImageAsset( path = "png/yes1.png")
-
-
-                                Row {
-
-
-                                    Button(onClick = { st = "Savenkov" }) {}
-
-
-
-                                    Column() {
-
-                                        var currentTime by remember {
-                                            mutableStateOf(1000)
-                                        }
-                                        var isTimerRunning by remember {
-                                            mutableStateOf(false)
-                                        }
-                                        val lcd = GreenLCD48()
-                                        lcd.clear(1)
-                                        //lcd.drawGliph('&'.toByte(), 41, 9, 1)
-                                        lcd.drawGliph('&', 1, 1)
-                                        lcd.string(9, 0, value = "${sliderPosition.format(1)}")
-                                        lcd.string(40, 0, "Hz")
-                                        lcd.string(0, 9, "SINUS")
-                                        //lcd.drawGliph('5'.toByte(), 0, 5)
-
-
-                                        //print("\n-------->LaunchedEffect\n")
-
-                                        var update by remember {
-                                            mutableStateOf(false)
-                                        }
-
-                                        if (update) {
-
-                                            //lcd.drawGliph('6'.toByte(), 12, 1)
-                                            //lcd.drawGliph('%'.toByte(), 41, 1)
-                                            //lcd.setPixel(0,0,1)
-                                        } else {
-                                            //lcd.drawGliph('5'.toByte(), 12, 1)
-                                            //lcd.drawGliph('&'.toByte(), 41, 1)
-                                            //lcd.setPixel(0,0,0)
-                                        }
-
-                                        LaunchedEffect(key1 = true, key2 = isTimerRunning) {
-
-                                            while (true) {
-                                                print("-------->\n")
-                                                delay(1000L)
-                                                //update = !update
-                                            }
-                                        }
-                                        lcd.render(
-                                            update,
-                                            modifier = Modifier.padding(start = 0.dp)
-                                        )
-
-                                        InfinitiSlider(
-                                            modifier = Modifier
-                                                .padding(start = 0.dp)
-                                                //.size(40.dp, 40.dp),//.background(Color.Red)
-                                                .height(20.dp).width(140.dp),
-                                            sensing = 0.01f,
-                                            image = ImageBitmap.imageResource(id = R.drawable.base),  //Фоновая картинка, неподвижная
-                                            rangeAngle = 1000f,
-                                            value = sliderPosition, //Вывод icrementalAngle от 0 до rangeAngle при rangeAngle != 0, и от +- Float при rangeAngle = 0
-                                            onValueChange = { sliderPosition = it },
-                                        )
-                                    }
-
-
-
-
-
-
-
-
-
-
-
-                                    Column()
-                                    {
-
-
-                                        EncoderLine(
-                                            modifier = Modifier
-                                                .padding(start = 0.dp)
-                                                .size(80.dp, 80.dp),
-                                            //.background(color = Color.Red)
-                                            //.scale(1f)
-
-                                            imageThump = ImageBitmap.imageResource(id = R.drawable.knob8thumb),
-                                            imageThumpSize = 10.dp,
-                                            imageThumbOffset = Offset(0f, -20f),
-
-                                            imageBG = ImageBitmap.imageResource(id = R.drawable.knob8bg),   //Неподвижная часть
-                                            imageBGSize = 100.dp,
-                                            imageBGOffset = Offset(10f, 7f),
-
-                                            //drawMeasureLine = true,
-                                            //drawMeasureCircle = true,
-                                            //drawMeasureDot = true
-                                            sensitivity = 0.4f,
-                                            onValueChange = { sliderPosition = it },
-                                            value = sliderPosition
-                                        )
-
-                                    }
-
-
-                                }
-
-
-                            }
-                        }
-
-                        Card(
-                            shape = RoundedCornerShape(16.dp),
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(8.dp)
-                                .height(200.dp)
-                                .border(0.3.dp, Color(0xFF2D2F36), RoundedCornerShape(16.dp)),
-                            backgroundColor = Color(0xFFB9ABAC),
-                            elevation = 10.dp,
-                        )
-                        {}
-
-
-                        //imageView.load(daimageLoader =  imageLoader )
-/*
-                        CoilImage(
-                            imageModel = R.drawable.g1,
-
-                            imageLoader = { imageLoader }, modifier = Modifier
-                                .recomposeHighlighter()
-                                .clickable {
-
-                                    if (GG.ch1_EN.value == 0)
-                                        GG.ch1_EN.value = 1
-                                    else
-                                        GG.ch1_EN.value = 0
-
-                                    //PlaybackEngine.CH_EN(1, GG.ch1_EN.value as Int)
-                                }
-                        )
-
- */
-
-
-                    }
-
-                    //Spinner("CH0", "CR", Global)
-                    //Spinner("CH0", "AM", Global)
-                    //Spinner("CH0", "FM", Global)
-                    //Spinner("CH1", "CR", Global)
-                    //Spinner("CH1", "AM", Global)
-                    //Spinner("CH1", "FM", Global)
-                    //ani()
-
-
-                    /*r text1 by remember { mutableStateOf("eee") }
-                    TextField(
-
-                        value = text1,
-                        onValueChange = { newText ->
-                            text1 = newText
-                        },
-                        modifier = Modifier.recomposeHighlighter()
-                    )
-                    */
-
-                    /*
-                                           mySwitch(state = Global.ch2_EN, onClick =
-                                           {
-                                               Log.d("mySwitch", "onClick")
-                                               Global.ch2_EN = !Global.ch2_EN
-                                               PlaybackEngine.CH_EN(1, Global.ch2_EN)
-                                           })
-                   */
-                    //shadow()
-                    // Create an ImageLoader
-
-/*
-                        val drawable =
-                            AppCompatResources.getDrawable(LocalContext.current, R.drawable.g1)
-
-                        Image(
-                            painter = rememberDrawablePainter(drawable = drawable),
-                            contentDescription = "", modifier = Modifier
-                            .scale(scaleX = 0.5f, scaleY = 1.0f)
-                        )
-
-*/
-
-
-                    /*
-
-                    CoilImage(
-                        imageModel = R.drawable.g1,
-                        //contentScale = ContentScale.FillBounds,
-                        imageLoader = { imageLoader },
-                        //modifier = Modifier.size(200.dp,100.dp)
-                    )
-
-                     */
-
-
-                }
+                mainsreen2()
+
+
+//                // A surface container using the 'background' color from the theme
+//                Surface(
+//                    modifier = Modifier.fillMaxSize(),
+//                    //color = Color(0xff2E3138) //MaterialTheme.colors.background
+//                    color = Color(0xFF897F7F) //MaterialTheme.colors.background
+//                ) {
+//
+//
+//
+//
+//
+//
+//                    Image(
+//                        painterResource(id = R.drawable.spire),
+//                        contentDescription = "",
+//                        contentScale = ContentScale.FillBounds, // or some other scale
+//                        modifier = Modifier.fillMaxSize()
+//                    )
+//
+//                    Column(
+//                        Modifier
+//                            .verticalScroll(rememberScrollState())
+//                            .recomposeHighlighter()
+//                    ) {
+//
+//
+//                        Card(
+//                            shape = RoundedCornerShape(20.dp),
+//                            modifier = Modifier
+//                                .fillMaxWidth()
+//                                .padding(8.dp),
+//                            //.height(200.dp)
+//                            //, backgroundColor = Color(0x00000000)
+//                            //backgroundColor = Color(0xff40434A),
+//                            //backgroundColor = Color(0xFFB9ABAC)
+//
+//
+//                            elevation = 10.dp,
+//                            //modifier = Modifier
+//                        ) {
+//
+//
+//                            val bC: ButtonColors = buttonColors(
+//                                contentColor = Color(0xFFE7E1D5),
+//                                backgroundColor = Color(0xFF29A1D3)
+//                            )
+//
+//                            Column(
+//                                modifier = Modifier.background(
+//                                    brush = GradientMixer.vertical(
+//                                        Color(
+//                                            0xFFDEDDDF
+//                                        ), Color(0xFFC0BFC2)
+//                                    )
+//                                )
+//                            ) {
+//
+//                                Row(
+//                                    //modifier = Modifier.background(Color.Red)
+//                                ) {
+//
+//                                    val r1 by Global.ch1_EN.observeAsState()
+//                                    ON_OFF(state = r1!!, config = onoffconfig1, onClick = {
+//                                        Global.ch1_EN.value = !Global.ch1_EN.value!!
+//                                    }, modifier = Modifier.padding(start = 8.dp, top = 30.dp))
+//
+//
+//                                    Box(
+//                                        modifier = Modifier.padding(
+//                                            top = 8.dp,
+//                                            end = 8.dp,
+//                                            start = 8.dp
+//                                        )
+//                                    )
+//                                    {
+//                                        Image9Patch(R.drawable.bg1, 310.dp, 70.dp)
+//                                        Spinner(
+//                                            "CH0",
+//                                            "CR",
+//                                            transparrent = true,
+//                                            modifier = Modifier.padding(start = 4.dp, top = 5.dp)
+//                                        )
+//                                    }
+//
+//                                }
+//
+//                                //Spacer(modifier = Modifier.height(16.dp))
+//
+//                                val sColor: SliderColors = SliderDefaults.colors(
+//                                    thumbColor = Color(0xFFF7F6F2),
+//                                    activeTrackColor = Color(0xFF007CBC),//(0xFFF1B018),
+//                                    inactiveTrackColor = Color(0xFF24252A),
+//                                )
+//
+//                                var sliderPosition by remember { mutableStateOf(0f) }
+//
+//                                Box() {
+//                                    Text(text = sliderPosition.toString())
+//                                    Slider(
+//                                        value = sliderPosition,
+//                                        onValueChange = { sliderPosition = it },
+//                                        valueRange = 0f..360f,
+//                                        //colors = sColor,
+//                                        modifier = Modifier.padding(start = 60.dp, end = 60.dp)
+//                                    )
+//                                }
+//
+//                                ColorfulSlider(
+//                                    modifier = Modifier.padding(start = 60.dp, end = 60.dp),
+//                                    value = sliderPosition,
+//                                    thumbRadius = 10.dp,
+//                                    trackHeight = 10.dp,
+//                                    onValueChange = { it ->
+//                                        sliderPosition = it
+//                                    },
+//                                    colors = MaterialSliderDefaults.materialColors(
+//                                        inactiveTrackColor = SliderBrushColor(color = Color.Transparent),
+//                                        //activeTrackColor = SliderBrushColor(
+//                                        //    brush = sunriseGradient(),
+//                                        //)
+//                                    ),
+//                                    //borderStroke = BorderStroke(2.dp, sunriseGradient())
+//                                )
+//
+//                                var value by remember { mutableStateOf(-0.5f) }
+//                                Text(text = value.toString())
+//
+//
+//
+//
+//                                Row(
+//                                    modifier = Modifier
+//                                        .fillMaxWidth()
+//                                        //.wrapContentHeight()
+//                                        .padding(60.dp)
+//                                ) {
+//
+//                                    val sunriseSliderColors = sunriseSliderColorsDefault()
+//
+//                                    val interactionSource = remember { MutableInteractionSource() }
+//                                    val wasPressed = interactionSource.collectIsPressedAsState()
+//                                    var enabledValue by remember { mutableStateOf(false) }
+//
+//                                    var values by remember { mutableStateOf(valuesList()) }
+//                                    var steps by remember { mutableStateOf(10) }
+//                                    var valueRange: ClosedFloatingPointRange<Float>? by remember {
+//                                        mutableStateOf(
+//                                            null
+//                                        )
+//                                    }
+//                                    val onValueChangeFinished by remember { mutableStateOf({}) }
+//                                    val tutorialEnabled by remember { mutableStateOf(true) }
+//
+//                                    if (!enabledValue && wasPressed.value) {
+//                                        enabledValue = true
+//                                    }
+//
+//
+//
+//                                    SunriseSlider(
+//                                        value = sliderPosition,
+//                                        onValueChange = { sliderPosition = it },
+//                                        //colors = sColor,
+//                                        modifier = Modifier.padding(start = 60.dp, end = 60.dp)
+//                                    )
+//
+//
+//                                }
+//
+//
+//                                Row() {
+//
+//
+//                                    EncoderLine(
+//                                        modifier = Modifier
+//                                            .padding(start = 32.dp)
+//                                            .size(80.dp, 80.dp),
+//                                        //.background(color = Color.Red)
+//                                        //.scale(1f)
+//
+//                                        imageThump = ImageBitmap.imageResource(id = R.drawable.knob2thumb),
+//                                        imageThumpSize = 90.dp,
+//                                        imageThumbOffset = Offset(0f, 0f),
+//
+//                                        imageBG = ImageBitmap.imageResource(id = R.drawable.knob2bg),   //Неподвижная часть
+//                                        imageBGSize = 100.dp,
+//                                        imageBGOffset = Offset(0f, 0f),
+//
+//                                        //drawMeasureLine = true,
+//                                        //drawMeasureCircle = true,
+//                                        //drawMeasureDot = true
+//                                        sensitivity = 0.4f,
+//                                        onValueChange = { sliderPosition = it },
+//                                        value = sliderPosition
+//                                    )
+//
+//
+//
+//
+//
+//                                    EncoderLine(
+//                                        modifier = Modifier
+//                                            //.padding(start = 32.dp, bottom = 64.dp)
+//                                            .size(100.dp, 100.dp)
+//                                            //.background(color = Color.Red)
+//                                            .scale(0.5f),
+//                                        imageThump = ImageBitmap.imageResource(id = R.drawable.knob1thumb),
+//                                        imageThumpSize = 20.dp,
+//                                        imageThumbOffset = Offset(0f, -40f),
+//
+//                                        imageBG = ImageBitmap.imageResource(id = R.drawable.knob1bg),   //Неподвижная часть
+//                                        imageBGSize = 100.dp,
+//                                        imageBGOffset = Offset(0f, 1f),
+//
+//                                        //drawMeasureLine = true,
+//                                        //drawMeasureCircle = true,
+//                                        //drawMeasureDot = true
+//
+//                                        rangeAngle = 180f + 90f, //Диапазон
+//                                        offsetAngle = -135f, //Смещение начала
+//                                        sensitivity = 0.4f,
+//                                        onValueChange = { sliderPosition = it },
+//                                        value = sliderPosition
+//                                    )
+//                                }
+//
+//
+//                                var st by remember { mutableStateOf("Privet") }
+//                                var count by remember { mutableStateOf(0) }
+//
+//                                //GreenLCD(value = st)
+//                                //GreenLCD(value = "&%:${sliderPosition.format(0)}Hz")
+//
+//                                Button(onClick = { st = "Ment$%&" }) {}
+//
+//
+//                                //ImageAsset( path = "png/yes1.png")
+//
+//
+//                                Row {
+//
+//
+//                                    Button(onClick = { st = "Savenkov" }) {}
+//
+//
+//
+//                                    Column() {
+//
+//
+//
+//                                        InfinitiSlider(
+//                                            modifier = Modifier
+//                                                .padding(start = 0.dp)
+//                                                //.size(40.dp, 40.dp),//.background(Color.Red)
+//                                                .height(20.dp)
+//                                                .width(140.dp),
+//                                            sensing = 0.01f,
+//                                            image = ImageBitmap.imageResource(id = R.drawable.base),  //Фоновая картинка, неподвижная
+//                                            rangeAngle = 1000f,
+//                                            value = sliderPosition, //Вывод icrementalAngle от 0 до rangeAngle при rangeAngle != 0, и от +- Float при rangeAngle = 0
+//                                            onValueChange = { sliderPosition = it },
+//                                        )
+//
+//
+//
+//                                        Text(
+//                                            text = "${sliderPosition}",
+//                                            fontFamily = FontFamily(
+//                                                Font(
+//                                                    R.font.led_8x6,
+//                                                    FontWeight.Normal
+//                                                )
+//                                            ),
+//                                            color = Color.Black
+//                                        )
+//
+//                                        Text(
+//                                            text = "${sliderPosition}",
+//                                            fontFamily = FontFamily(
+//                                                Font(
+//                                                    R.font.dotmari,
+//                                                    FontWeight.Normal
+//                                                )
+//                                            ),
+//                                            color = Color.Black
+//                                        )
+//
+//                                        Text(
+//                                            text = "${sliderPosition}",
+//                                            fontFamily = FontFamily(
+//                                                Font(
+//                                                    R.font.nunito,
+//                                                    FontWeight.Normal
+//                                                )
+//                                            ),
+//                                            color = Color.Black
+//                                        )
+//
+//                                        Text(
+//                                            text = "${sliderPosition}",
+//                                            fontFamily = FontFamily(
+//                                                Font(
+//                                                    R.font.squaredotmatrix,
+//                                                    FontWeight.Normal
+//                                                )
+//                                            ),
+//                                            color = Color.Black
+//                                        )
+//
+//
+//
+//                                    }
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//                                    Column()
+//                                    {
+//
+//
+//                                        EncoderLine(
+//                                            modifier = Modifier
+//                                                .padding(start = 0.dp)
+//                                                .size(80.dp, 80.dp),
+//                                            //.background(color = Color.Red)
+//                                            //.scale(1f)
+//
+//                                            imageThump = ImageBitmap.imageResource(id = R.drawable.knob8thumb),
+//                                            imageThumpSize = 10.dp,
+//                                            imageThumbOffset = Offset(0f, -20f),
+//
+//                                            imageBG = ImageBitmap.imageResource(id = R.drawable.knob8bg),   //Неподвижная часть
+//                                            imageBGSize = 100.dp,
+//                                            imageBGOffset = Offset(10f, 7f),
+//
+//                                            //drawMeasureLine = true,
+//                                            //drawMeasureCircle = true,
+//                                            //drawMeasureDot = true
+//                                            sensitivity = 0.4f,
+//                                            onValueChange = { sliderPosition = it },
+//                                            value = sliderPosition
+//                                        )
+//
+//                                    }
+//
+//
+//                                }
+//
+//
+//                            }
+//                        }
+//
+//                        Card(
+//                            shape = RoundedCornerShape(16.dp),
+//                            modifier = Modifier
+//                                .fillMaxWidth()
+//                                .padding(8.dp)
+//                                .height(200.dp)
+//                                .border(0.3.dp, Color(0xFF2D2F36), RoundedCornerShape(16.dp)),
+//                            backgroundColor = Color(0xFFB9ABAC),
+//                            elevation = 10.dp,
+//                        )
+//                        {}
+//
+//
+//                        //imageView.load(daimageLoader =  imageLoader )
+///*
+//                        CoilImage(
+//                            imageModel = R.drawable.g1,
+//
+//                            imageLoader = { imageLoader }, modifier = Modifier
+//                                .recomposeHighlighter()
+//                                .clickable {
+//
+//                                    if (GG.ch1_EN.value == 0)
+//                                        GG.ch1_EN.value = 1
+//                                    else
+//                                        GG.ch1_EN.value = 0
+//
+//                                    //PlaybackEngine.CH_EN(1, GG.ch1_EN.value as Int)
+//                                }
+//                        )
+//
+// */
+//
+//
+//                    }
+//
+//                    //Spinner("CH0", "CR", Global)
+//                    //Spinner("CH0", "AM", Global)
+//                    //Spinner("CH0", "FM", Global)
+//                    //Spinner("CH1", "CR", Global)
+//                    //Spinner("CH1", "AM", Global)
+//                    //Spinner("CH1", "FM", Global)
+//                    //ani()
+//
+//
+//                    /*r text1 by remember { mutableStateOf("eee") }
+//                    TextField(
+//
+//                        value = text1,
+//                        onValueChange = { newText ->
+//                            text1 = newText
+//                        },
+//                        modifier = Modifier.recomposeHighlighter()
+//                    )
+//                    */
+//
+//                    /*
+//                                           mySwitch(state = Global.ch2_EN, onClick =
+//                                           {
+//                                               Log.d("mySwitch", "onClick")
+//                                               Global.ch2_EN = !Global.ch2_EN
+//                                               PlaybackEngine.CH_EN(1, Global.ch2_EN)
+//                                           })
+//                   */
+//                    //shadow()
+//                    // Create an ImageLoader
+//
+///*
+//                        val drawable =
+//                            AppCompatResources.getDrawable(LocalContext.current, R.drawable.g1)
+//
+//                        Image(
+//                            painter = rememberDrawablePainter(drawable = drawable),
+//                            contentDescription = "", modifier = Modifier
+//                            .scale(scaleX = 0.5f, scaleY = 1.0f)
+//                        )
+//
+//*/
+//
+//
+//                    /*
+//
+//                    CoilImage(
+//                        imageModel = R.drawable.g1,
+//                        //contentScale = ContentScale.FillBounds,
+//                        imageLoader = { imageLoader },
+//                        //modifier = Modifier.size(200.dp,100.dp)
+//                    )
+//
+//                     */
+//
+//
+//                }
             }
         }
     }

@@ -171,4 +171,8 @@ dependencies {
 
     implementation 'com.siddroid:holi:0.0.7' //Цвета
 
+    implementation 'com.github.seniorjoinu:reliable-udp:0.3.1' //Udp
+
+    implementation 'com.google.code.gson:gson:2.8.9'
+
 }

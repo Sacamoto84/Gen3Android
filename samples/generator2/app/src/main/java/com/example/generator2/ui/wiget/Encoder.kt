@@ -69,12 +69,15 @@ fun EncoderLine(
 ) {
 
     val onValueChangeState = rememberUpdatedState(onValueChange)
-    val ValueRemember = rememberUpdatedState(value)
 
-    var icrementalAngle by remember { mutableStateOf(0f) }
+    val valueRemember =  remember{ mutableStateOf(value)}
+
+    var icrementalAngle = remember { mutableStateOf(0f) }
+
+    if (value != icrementalAngle.value) icrementalAngle.value = value!!
 
     if (value != null) {
-        icrementalAngle = ValueRemember.value!!
+        //icrementalAngle = valueRemember.value!!
     }
 
     Box(
@@ -162,7 +165,7 @@ fun EncoderLine(
                 )
                 drawArc(
                     color = Color.Green,
-                    startAngle = icrementalAngle,
+                    startAngle = icrementalAngle.value,
                     sweepAngle = 10f,
                     useCenter = false,
                     size = Size(200f, 200f),
@@ -183,7 +186,7 @@ fun EncoderLine(
             }
 
             //Поворачиваем картинку точки подвижня часть
-            rotate(degrees = icrementalAngle + offsetAngle) {
+            rotate(degrees = icrementalAngle.value + offsetAngle) {
                 if (imageThumpresized != null) {
                     drawImage(
                         image = imageThumpresized,
@@ -235,15 +238,19 @@ fun EncoderLine(
                         { change, dragAmount ->
                             change.consumeAllChanges()
                             //icrementalAngle += dragAmount.x
-                            icrementalAngle += dragAmount.y * sensitivity
+                            icrementalAngle.value += dragAmount.y * sensitivity
 
                                 if (rangeAngle != 0f) {
-                                    if (icrementalAngle > rangeAngle) icrementalAngle =
+                                    if (icrementalAngle.value > rangeAngle) icrementalAngle.value =
                                         rangeAngle
-                                    if (icrementalAngle < 0f) icrementalAngle = 0f
+                                    if (icrementalAngle.value < 0f) icrementalAngle.value = 0f
                                 }
 
-                            onValueChangeState.value.invoke(icrementalAngle)
+                            //onValueChange(icrementalAngle.value)
+
+                            onValueChangeState.value.invoke(icrementalAngle.value)
+
+
                         },
                         onDragEnd = {
                         },
