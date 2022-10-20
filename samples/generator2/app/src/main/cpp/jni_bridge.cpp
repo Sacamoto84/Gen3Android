@@ -23,13 +23,8 @@
 extern "C" {
 
 
-
-
-
-
-
 JNIEXPORT jlong JNICALL
-Java_com_example_generator2_PlaybackEngine_native_1createEngine( JNIEnv *env, jclass /*unused*/) {
+Java_com_example_generator2_PlaybackEngine_native_1createEngine(JNIEnv *env, jclass /*unused*/) {
     // We use std::nothrow so `new` returns a nullptr if the engine creation fails
     HelloOboeEngine *engine = new(std::nothrow) HelloOboeEngine();
     if (engine == nullptr) {
@@ -257,7 +252,7 @@ Java_com_example_generator2_PlaybackEngine_native_1setCH_1Carrier_1fr(
         jclass,
         jlong engineHandle,
         jint CH,
-        jint fr
+        jfloat fr
 ) {
     HelloOboeEngine *engine = reinterpret_cast<HelloOboeEngine *>(engineHandle);
     if (engine == nullptr) {
@@ -265,7 +260,7 @@ Java_com_example_generator2_PlaybackEngine_native_1setCH_1Carrier_1fr(
         return;
     }
 
-    LOGI("JNI:setCH_Carrier_fr: CH:%d fr%d", CH, fr);
+    LOGI("JNI:setCH_Carrier_fr: CH:%d fr%f", CH, fr);
 
     if (engine->mAudioSource) {
         if (CH == 0)
@@ -329,10 +324,10 @@ Java_com_example_generator2_PlaybackEngine_native_1setCH_1FM_1fr(
 extern "C"
 JNIEXPORT void JNICALL
 Java_com_example_generator2_PlaybackEngine_native_1setCH_1Send_1Buffer(JNIEnv *env,
-                                                                                  jclass clazz,
-                                                                                  jlong engineHandle,
-                                                                                  jint CH, jint mod,
-                                                                                  jbyteArray buf) {
+                                                                       jclass clazz,
+                                                                       jlong engineHandle,
+                                                                       jint CH, jint mod,
+                                                                       jbyteArray buf) {
 
 
     HelloOboeEngine *engine = reinterpret_cast<HelloOboeEngine *>(engineHandle);
@@ -411,49 +406,46 @@ Java_com_example_generator2_PlaybackEngine_native_1setCH_1Send_1Buffer(JNIEnv *e
 
 JNIEXPORT void JNICALL
 Java_com_example_generator2_PlaybackEngine_native_1setCH_1FM_1Base(JNIEnv *env,
-                                                                              jclass clazz,
-                                                                              jlong engineHandle,
-                                                                              jint CH, jint fr) {
+                                                                   jclass clazz,
+                                                                   jlong engineHandle,
+                                                                   jint CH, float fr) {
 
 
-
-HelloOboeEngine *engine = reinterpret_cast<HelloOboeEngine *>(engineHandle);
-if ( engine == nullptr ) {
-LOGE("Engine handle is invalid, call createHandle() to create a new one") ;
-return ;
-}
-
-LOGI("JNI:setCH_FM_Base: CH:%d FR%d", CH, fr);
-
-if (engine->mAudioSource) {
-    if (CH == 0) {
-        engine->mAudioSource->mGenerator->CH1.FM_Base = fr;
-        engine->mAudioSource->mGenerator->CreateFM_CH1();
-    } else {
-        engine->mAudioSource->mGenerator->CH2.FM_Base = fr;
-        engine->mAudioSource->mGenerator->CreateFM_CH2();
+    HelloOboeEngine *engine = reinterpret_cast<HelloOboeEngine *>(engineHandle);
+    if (engine == nullptr) {
+        LOGE("Engine handle is invalid, call createHandle() to create a new one");
+        return;
     }
-}
 
+    LOGI("JNI:setCH_FM_Base: CH:%d FR%f", CH, fr);
+
+    if (engine->mAudioSource) {
+        if (CH == 0) {
+            engine->mAudioSource->mGenerator->CH1.FM_Base = fr;
+            engine->mAudioSource->mGenerator->CreateFM_CH1();
+        } else {
+            engine->mAudioSource->mGenerator->CH2.FM_Base = fr;
+            engine->mAudioSource->mGenerator->CreateFM_CH2();
+        }
+    }
 
 
 }
 
 JNIEXPORT void JNICALL
 Java_com_example_generator2_PlaybackEngine_native_1setCH_1FM_1Dev(JNIEnv *env,
-                                                                              jclass clazz,
-                                                                              jlong engineHandle,
-                                                                              jint CH, jint fr) {
-
+                                                                  jclass clazz,
+                                                                  jlong engineHandle,
+                                                                  jint CH, jfloat fr) {
 
 
     HelloOboeEngine *engine = reinterpret_cast<HelloOboeEngine *>(engineHandle);
-    if ( engine == nullptr ) {
-        LOGE("Engine handle is invalid, call createHandle() to create a new one") ;
-        return ;
+    if (engine == nullptr) {
+        LOGE("Engine handle is invalid, call createHandle() to create a new one");
+        return;
     }
 
-    LOGI("JNI:setCH_FM_Dev: CH:%d FR%d", CH, fr);
+    LOGI("JNI:setCH_FM_Dev: CH:%d FR%f", CH, fr);
 
     if (CH == 0) {
         engine->mAudioSource->mGenerator->CH1.FM_Dev = fr;
@@ -464,14 +456,6 @@ Java_com_example_generator2_PlaybackEngine_native_1setCH_1FM_1Dev(JNIEnv *env,
     }
 
 }
-
-
-
-
-
-
-
-
 
 
 }

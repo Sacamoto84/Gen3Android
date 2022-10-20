@@ -40,12 +40,8 @@ import com.example.generator2.Global.onoffconfig1
 import com.example.generator2.ui.slider.SunriseSliderColors
 import com.example.generator2.ui.theme.Generator2Theme
 import com.example.generator2.ui.wiget.UImodifier.coloredShadow2
-import com.jortas.sunriseslider.ProjColors
-
-
-enum class BikePosition {
-    Start, Finish
-}
+import libs.KeepScreenOn
+import mainsreen4
 
 fun valuesList() = listOf(0f, 100f)
 
@@ -67,8 +63,7 @@ fun sunriseSliderColorsDefault() = SunriseSliderColors(
 
 
 class MainActivity : ComponentActivity() {
-
-
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -83,7 +78,7 @@ class MainActivity : ComponentActivity() {
         /** Запуск Звука
          */
         PlaybackEngine.create(this) //.create(this)
-        val result = PlaybackEngine.start()
+        PlaybackEngine.start()
 
 
         onoffconfig1.pathOn = "png/switch/on.png"
@@ -98,9 +93,6 @@ class MainActivity : ComponentActivity() {
         onoffconfig1.groupDeltaY = 0.dp
         onoffconfig1.groupPositionOn = 34.dp
         onoffconfig1.groupPositionOff = 0.dp
-
-
-
 
         onoffconfig.componentW = 64.0f
         onoffconfig.componentPixelW = 108.0f
@@ -144,11 +136,18 @@ class MainActivity : ComponentActivity() {
             .build()
 
 
+
+
         setContent {
+
+            KeepScreenOn()
+
             Generator2Theme {
 
 
-                mainsreen2()
+                mainsreen4()
+
+                //ScriptActivity()
 
 
 //                // A surface container using the 'background' color from the theme

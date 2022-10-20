@@ -18,7 +18,6 @@ import com.example.generator2.ui.wiget.EncoderLine
 import com.example.generator2.ui.wiget.UIspinner.Spinner
 import kotlinx.coroutines.delay
 
-
 @Composable
 fun mainsreen() {
     // A surface container using the 'background' color from the theme
@@ -220,7 +219,6 @@ fun mainsreen() {
 
 
 }
-
 
 @Composable
 fun calculateLCD(CH: Int = 0) {

@@ -20,13 +20,13 @@ typedef struct {
     int AM_EN;
     int FM_EN;
 
-    int Carrier_fr;       //Частота нечущей
+    float Carrier_fr;         //Частота нечущей
 
     float AM_fr;              //Часта модуляции
 
-    int FM_Base;
-    int FM_Dev;
-    char FM_mod[20];       //Имя файла
+    float FM_Base;
+    float FM_Dev;
+    char  FM_mod[20];       //Имя файла
     float FM_mod_fr;        //Часта модуляции
 
     //Буфферы

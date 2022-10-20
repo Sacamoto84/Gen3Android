@@ -61,7 +61,6 @@ public class PlaybackEngine {
         mEngineHandle = 0;
     }
 
-
     static void setAudioApi(int audioApi) {
         if (mEngineHandle != 0) native_setAudioApi(mEngineHandle, audioApi);
     }
@@ -87,7 +86,6 @@ public class PlaybackEngine {
         return mEngineHandle != 0 && native_isLatencyDetectionSupported(mEngineHandle);
     }
 
-
     //Внешняя функция
 
     //Включалки
@@ -107,7 +105,7 @@ public class PlaybackEngine {
     }
 
     //Установка частоты
-    static void CH_Carrier_fr(int CH, int fr) {
+    static void CH_Carrier_fr(int CH, float fr) {
         if (mEngineHandle != 0)
             native_setCH_Carrier_fr(mEngineHandle, CH, fr);
     }
@@ -128,12 +126,12 @@ public class PlaybackEngine {
             native_setCH_Send_Buffer(mEngineHandle, CH, mod, buf);
     }
 
-    static void CH_FM_Base(int CH, int fr) {
+    static void CH_FM_Base(int CH, float fr) {
         if (mEngineHandle != 0)
             native_setCH_FM_Base(mEngineHandle, CH, fr);
     }
 
-    static void CH_FM_Dev(int CH, int fr) {
+    static void CH_FM_Dev(int CH, float fr) {
         if (mEngineHandle != 0)
             native_setCH_FM_Dev(mEngineHandle, CH, fr);
     }
@@ -169,17 +167,16 @@ public class PlaybackEngine {
 
     private static native void native_setCH_FMEN(long engineHandle, int CH, boolean EN);
 
-    private static native void native_setCH_Carrier_fr(long engineHandle, int CH, int fr); //Изменить частоту несущей
+    private static native void native_setCH_Carrier_fr(long engineHandle, int CH, float fr); //Изменить частоту несущей
 
     private static native void native_setCH_AM_fr(long engineHandle, int CH, float fr);    //Изменить частоту Амплитудной модуляции
 
     private static native void native_setCH_FM_fr(long engineHandle, int CH, float fr);    //Изменить частоту Частотной модуляции
 
-    private static native void native_setCH_FM_Base(long engineHandle, int CH, int fr);    //Изменить базовую  частоту Частотной модуляции
+    private static native void native_setCH_FM_Base(long engineHandle, int CH, float fr);    //Изменить базовую  частоту Частотной модуляции
 
-    private static native void native_setCH_FM_Dev(long engineHandle, int CH, int fr);     //Изменить девиацию частоту Частотной модуляции
+    private static native void native_setCH_FM_Dev(long engineHandle, int CH, float fr);     //Изменить девиацию частоту Частотной модуляции
 
     private static native void native_setCH_Send_Buffer(long engineHandle, int CH, int mod, byte[] buf);
-
-
+    
 }

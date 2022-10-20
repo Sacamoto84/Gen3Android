@@ -85,7 +85,6 @@ public class Utils {
         return true;
     }
 
-
     /**
      *  Получить список файлов по пути
      *
@@ -254,13 +253,9 @@ public class Utils {
 
         Paint mPaint = new Paint();
 
-
         //mPaint.setStrokeWidth(4);
         //mPaint.setColor(0x1000FF00);
         //c.drawRect( 0, 0, 1024-1 ,512-1, mPaint);
-
-
-
 
         mPaint.setStrokeWidth(4);
         mPaint.setColor(Color.DKGRAY);
@@ -331,7 +326,6 @@ public class Utils {
         return res;
     }
 
-
     //Для спиннера, отсылка массива
     public static void Spinner_Send_Buffer(String CH, String Mod, String name)
     {
@@ -350,13 +344,5 @@ public class Utils {
         if (CH.equals("CH1")) ch = 1;
         PlaybackEngine.CH_Send_Buffer(ch,mod , buf); //Послали буффер
     }
-
-
-
-
-
-
-
-
 
 }

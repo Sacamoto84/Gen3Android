@@ -61,7 +61,7 @@ object UIspinner {
         }
 
             Box(modifier = Modifier
-                .fillMaxSize()
+                //.fillMaxSize()
                 .background(Color.Transparent).then(modifier), contentAlignment = Alignment.Center
             )
             {
@@ -69,7 +69,7 @@ object UIspinner {
                         .clickable {
                             expanded.value = !expanded.value
                         }
-                        .background(  color = if (transparrent)  Color(0x0) else Color(0xFF24252A))
+                        .background(  color = if (transparrent)  Color(0x00000000) else Color(0xFF13161B))
                         ,
                         //horizontalAlignment = Alignment.CenterHorizontally,
                         verticalAlignment = Alignment.CenterVertically
@@ -78,20 +78,19 @@ object UIspinner {
                     )
                     {
 
-
-
-
                         Image(
                             bitmap = itemlist[indexBitmapCurrent.value].bitmap.asImageBitmap(),
                             contentDescription = null
-                            ,modifier = Modifier.width( 128.dp ).height(64.dp)
+                            ,modifier = Modifier.width( 96.dp ).height(48.dp).padding(start = 4.dp) //128 64
                         )
 
-                        Text(text = currentValue, modifier = Modifier.fillMaxWidth().padding(start=8.dp).weight(1f)
-                            , color = Color(0xFFE7E1D5)
-                            , fontSize = 24.sp, textAlign = TextAlign.Center)
+//                        Text(text = currentValue, modifier = Modifier.fillMaxWidth().padding(start=8.dp).weight(1f)
+//                            , color = Color(0xFFE7E1D5)
+//                            , fontSize = 24.sp, textAlign = TextAlign.Center)
 
-                        Icon(imageVector = Icons.Filled.ArrowDropDown, contentDescription = null, modifier = Modifier.width( 32.dp ), tint = Color(0xFFE7E1D5))
+                        Icon(imageVector = Icons.Filled.ArrowDropDown, contentDescription = null,
+                            modifier = Modifier.width( 16.dp ), //32
+                            tint = Color(0xFFE7E1D5))
 
                         DropdownMenu(expanded = expanded.value, onDismissRequest = {
                             expanded.value = false
@@ -138,10 +137,6 @@ object UIspinner {
                                             it.name
                                         ) //Читае м отсылаем массив
                                 }
-                                ,
-
-
-
                                 ) {
                                         Image(
                                             bitmap = it.bitmap.asImageBitmap(),

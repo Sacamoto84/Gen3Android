@@ -15,7 +15,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.example.generator2.Image9Patch
 import com.example.generator2.R
 import androidx.compose.foundation.*
 import androidx.compose.material.Text
@@ -23,6 +22,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import libs.Image9Patch
 
 
 private const val sizeDot = 9f//11f       //Размер точки

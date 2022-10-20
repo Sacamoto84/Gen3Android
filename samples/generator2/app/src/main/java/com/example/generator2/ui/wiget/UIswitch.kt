@@ -16,9 +16,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.example.generator2.ConfigOnOff
-import com.example.generator2.ImageAsset
 import com.example.generator2.R
 import com.example.generator2.ui.wiget.UImodifier.noRippleClickable
+import libs.ImageAsset
 
 object UIswitch {
 

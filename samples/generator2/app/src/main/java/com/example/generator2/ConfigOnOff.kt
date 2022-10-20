@@ -13,10 +13,6 @@ class ConfigOnOff {
     var componentPixelW  : Float = 10.0f
     var componentPixelH  : Float = 10.0f
 
-
-
-
-
     var groupW           : Float = 10.0f
 
     var groupPixelW      : Float = 10.0f
