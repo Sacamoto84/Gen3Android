@@ -96,13 +96,6 @@ object Global : ViewModel(){
             Log.d("Init",e.printStackTrace().toString())
         }
 
-
-
-
-
-
-
-
     }
 
 
@@ -131,12 +124,12 @@ object Global : ViewModel(){
 
         ch1_FM_EN.observeForever { ch1_FM_EN ->
             Log.d("observeForever", "onClick")
-            PlaybackEngine.CH_AM_EN(0, ch1_FM_EN!!)
+            PlaybackEngine.CH_FM_EN(0, ch1_FM_EN!!)
         }
 
         ch2_FM_EN.observeForever { ch2_FM_EN ->
             Log.d("observeForever", "onClick")
-            PlaybackEngine.CH_AM_EN(1, ch2_FM_EN!!)
+            PlaybackEngine.CH_FM_EN(1, ch2_FM_EN!!)
         }
 
 
@@ -149,7 +142,6 @@ object Global : ViewModel(){
             Log.d("observeForever", "onClick")
             PlaybackEngine.CH_Carrier_fr(1, ch2_Carrier_Fr!!)
         }
-
 
         ch1_AM_Fr.observeForever { ch1_AM_Fr ->
             Log.d("observeForever", "onClick")
@@ -190,6 +182,35 @@ object Global : ViewModel(){
             Log.d("observeForever", "onClick")
             PlaybackEngine.CH_FM_fr(1, ch2_FM_Fr!!)
         }
+
+    }
+
+    fun sendAlltoGen()
+    {
+        PlaybackEngine.CH_EN(0, ch1_EN.value!!)
+        PlaybackEngine.CH_EN(1, ch2_EN.value!!)
+        PlaybackEngine.CH_AM_EN(0, ch1_AM_EN.value!!)
+        PlaybackEngine.CH_AM_EN(1, ch2_AM_EN.value!!)
+        PlaybackEngine.CH_FM_EN(0, ch1_FM_EN.value!!)
+        PlaybackEngine.CH_FM_EN(1, ch2_FM_EN.value!!)
+        PlaybackEngine.CH_Carrier_fr(0, ch1_Carrier_Fr.value!!)
+        PlaybackEngine.CH_Carrier_fr(1, ch2_Carrier_Fr.value!!)
+        PlaybackEngine.CH_AM_fr(0, ch1_AM_Fr.value!!)
+        PlaybackEngine.CH_AM_fr(1, ch2_AM_Fr.value!!)
+        PlaybackEngine.CH_FM_Base(0, ch1_FM_Base.value!!)
+        PlaybackEngine.CH_FM_Base(1, ch2_FM_Base.value!!)
+        PlaybackEngine.CH_FM_Dev(0, ch1_FM_Dev.value!!)
+        PlaybackEngine.CH_FM_Dev(1, ch2_FM_Dev.value!!)
+        PlaybackEngine.CH_FM_fr(0, ch1_FM_Fr.value!!)
+        PlaybackEngine.CH_FM_fr(1, ch2_FM_Fr.value!!)
+
+        Utils.Spinner_Send_Buffer("CH0","CR",   ch1_Carrier_Filename.value )
+        Utils.Spinner_Send_Buffer("CH0","AM",   ch1_AM_Filename.value )
+        Utils.Spinner_Send_Buffer("CH0","FM",   ch1_FM_Filename.value )
+
+        Utils.Spinner_Send_Buffer("CH1","CR",   ch2_Carrier_Filename.value )
+        Utils.Spinner_Send_Buffer("CH1","AM",   ch2_AM_Filename.value )
+        Utils.Spinner_Send_Buffer("CH1","FM",   ch2_FM_Filename.value )
 
     }
 

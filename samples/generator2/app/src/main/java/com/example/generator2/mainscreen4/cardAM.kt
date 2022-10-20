@@ -31,79 +31,98 @@ import com.example.generator2.ui.wiget.UIspinner
 @Composable
 fun CardAM(str: String = "CH0") {
 
-    Card(
+    val amEN: State<Boolean?> = if (str == "CH0") {
+        Global.ch1_AM_EN.observeAsState()
+    } else {
+        Global.ch2_AM_EN.observeAsState()
+    }
 
-        backgroundColor = Color(0xFF2A2D36), modifier = Modifier
-            .wrapContentHeight()
-            .fillMaxWidth()
-            .padding(start = 16.dp, end = 16.dp, top = 16.dp),
-        elevation = 5.dp
+    val amFr: State<Float?> = if (str == "CH0") {
+        Global.ch1_AM_Fr.observeAsState()
+    } else {
+        Global.ch2_AM_Fr.observeAsState()
+    }
+
+    //Card(
+//
+//        backgroundColor = Color(0xFF2A2D36),
+//        modifier = Modifier
+//            .wrapContentHeight()
+//            .fillMaxWidth()
+//            .padding(start = 16.dp, end = 16.dp, top = 16.dp),
+//        elevation = 5.dp
+//    )
+//    {
+    Column(
+
+
+        //modifier = Modifier
+        //.wrapContentHeight()
+        //.fillMaxWidth()
+        //.padding(start = 16.dp, end = 16.dp, top = 16.dp).background(Color(0xFF2A2D36)),
+
+
     )
     {
-        Column()
+
+        Box(
+            modifier = Modifier
+                .background(if (str == "CH0") colorGreen else colorOrange)
+                .height(30.dp)
+                .fillMaxWidth(),
+            contentAlignment = Alignment.Center
+        )
         {
-            Box(
-                modifier = Modifier
-                    .background(if (str == "CH0") Color(0xFF4CB050) else Color(0xFFC2AA10))
-                    .height(30.dp)
-                    .fillMaxWidth(),
-                contentAlignment = Alignment.Center
-            )
-            {
-                Text("AM")
-            }
+            Text("AM")
+        }
+
+        Row(
+            Modifier.padding(top = 8.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
 
 
-            val amFr: State<Float?> = if (str == "CH0") {
-                Global.ch1_AM_Fr.observeAsState()
-            } else {
-                Global.ch2_AM_Fr.observeAsState()
-            }
 
-            Row(
-                Modifier.padding(top = 8.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-
-                val amEN: State<Boolean?> = if (str == "CH0") {
-                    Global.ch1_AM_EN.observeAsState()
-                } else {
-                    Global.ch2_AM_EN.observeAsState()
-                }
-
-                Switch(checked = amEN.value!!, onCheckedChange = {
+            Switch(
+                checked = amEN.value!!,
+                onCheckedChange = {
                     if (str == "CH0") Global.ch1_AM_EN.value = it else Global.ch2_AM_EN.value = it
-
                 })
 
-                MainscreenTextBox(String.format("%.1f Hz", amFr.value), Modifier.height(48.dp).fillMaxWidth().weight(1f))
-
-                UIspinner.Spinner(
-                    str,
-                    "AM",
-                    modifier = Modifier
-                        .padding(top = 0.dp, start = 8.dp, end = 8.dp)
-                        .wrapContentWidth()
-                        .clip(shape = RoundedCornerShape(4.dp))
-                )
-
-
-            }
-
-            Slider(
-                valueRange = 0.1f..100f,
-                value = amFr.value!!,
-                onValueChange = {
-                    if (str == "CH0") Global.ch1_AM_Fr.value =
-                        it else Global.ch2_AM_Fr.value = it
-                                },
-                modifier = Modifier
+            MainscreenTextBox(
+                String.format("%.1f Hz", amFr.value),
+                Modifier
+                    .height(48.dp)
                     .fillMaxWidth()
-                    .padding(start = 8.dp, end = 8.dp),
-                colors = SliderDefaults.colors(thumbColor = Color.LightGray)
+                    .weight(1f)
+            )
+
+            UIspinner.Spinner(
+                str,
+                "AM",
+                modifier = Modifier
+                    .padding(top = 0.dp, start = 8.dp, end = 8.dp)
+                    .wrapContentWidth()
+                    .clip(shape = RoundedCornerShape(4.dp))
             )
 
 
         }
+
+        Slider(
+            valueRange = 0.1f..100f,
+            value = amFr.value!!,
+            onValueChange = {
+                if (str == "CH0") Global.ch1_AM_Fr.value =
+                    it else Global.ch2_AM_Fr.value = it
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 8.dp, end = 8.dp),
+            colors = SliderDefaults.colors(thumbColor = Color.LightGray)
+        )
+
+
     }
+    //}
 }

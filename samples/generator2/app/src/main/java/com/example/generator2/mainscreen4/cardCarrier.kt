@@ -110,6 +110,37 @@ fun CardCarrier(str: String = "CH0") {
             )
 
 
+
+
+
+
+
+
+
+            CardAM(str)
+            CardFM(str)
+
+
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 }

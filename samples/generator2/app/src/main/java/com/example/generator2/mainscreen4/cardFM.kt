@@ -16,6 +16,7 @@ import androidx.compose.material.SliderDefaults
 import androidx.compose.material.Switch
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -29,22 +30,48 @@ import com.example.generator2.Global
 import com.example.generator2.ui.wiget.UIspinner
 
 @Composable
-fun CardFM() {
+fun CardFM(str: String = "CH0") {
 
-    Card(
+    val fmEN: State<Boolean?> = if (str == "CH0") {
+        Global.ch1_FM_EN.observeAsState()
+    } else {
+        Global.ch2_FM_EN.observeAsState()
+    }
 
-        backgroundColor = Color(0xFF2A2D36), modifier = Modifier
-            .wrapContentHeight()
-            .fillMaxWidth()
-            .padding(start = 16.dp, end = 16.dp, top = 16.dp),
-        elevation = 5.dp
-    )
-    {
+    val fmFr: State<Float?> = if (str == "CH0") {
+        Global.ch1_FM_Fr.observeAsState()
+    } else {
+        Global.ch2_FM_Fr.observeAsState()
+    }
+
+    val fmBase: State<Float?> = if (str == "CH0") {
+        Global.ch1_FM_Base.observeAsState()
+    } else {
+        Global.ch2_FM_Base.observeAsState()
+    }
+
+    val fmDev: State<Float?> = if (str == "CH0") {
+        Global.ch1_FM_Dev.observeAsState()
+    } else {
+        Global.ch2_FM_Dev.observeAsState()
+    }
+
+
+//    Card(
+//
+//        backgroundColor = Color(0xFF2A2D36),
+//        modifier = Modifier
+//            .wrapContentHeight()
+//            .fillMaxWidth()
+//            .padding(start = 16.dp, end = 16.dp, top = 16.dp),
+//        elevation = 5.dp
+//    )
+//    {
         Column()
         {
             Box(
                 modifier = Modifier
-                    .background(Color(0xFF4CB050))
+                    .background(if (str == "CH0") colorGreen else colorOrange)
                     .height(30.dp)
                     .fillMaxWidth(),
                 contentAlignment = Alignment.Center
@@ -53,71 +80,57 @@ fun CardFM() {
                 Text("FM")
             }
 
-            val carrierFr by Global.ch1_Carrier_Fr.observeAsState()
-
             Row(
-                Modifier.padding(top = 8.dp).height(48.dp),
+                Modifier
+                    .padding(top = 8.dp)
+                    .height(48.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
 
-                Switch(checked = true, onCheckedChange = {})
 
-                val str = String.format("%.1f Hz", carrierFr)
-                //MainscreenTextBox(str, modifier = Modifier.fillMaxHeight().fillMaxWidth().weight(1f))
 
-                Text(
-                    text = "",
-                    color = Color.LightGray,
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.fillMaxWidth().weight(1f)
+                Switch(checked = fmEN.value!!, onCheckedChange = {
+                    if (str == "CH0") Global.ch1_FM_EN.value = it else Global.ch2_FM_EN.value = it
+                })
+
+                MainscreenTextBox(
+                    String.format("%.1f Hz", fmFr.value),
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .fillMaxWidth()
+                        .weight(1f)
                 )
 
                 UIspinner.Spinner(
-                    "CH0",
+                    str,
                     "FM",
                     modifier = Modifier
                         .padding(top = 0.dp, start = 8.dp, end = 8.dp)
                         .wrapContentWidth()
                         //.fillMaxWidth()
-                        .clip(shape = RoundedCornerShape(4.dp)).background(Color.Black)
+                        .clip(shape = RoundedCornerShape(4.dp))
+                        .background(Color.Black)
                 )
 
             }
 
-            val str = String.format("%.1f Hz", carrierFr)
-
-///////////////////////////
-            Row(
-                Modifier.padding(top = 8.dp, start = 8.dp, end= 8.dp).height(48.dp),
-                verticalAlignment = Alignment.CenterVertically
-            )
-            {
-                Text(
-                    text = "Частота модуляции",
-                    color = Color.LightGray,
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.fillMaxWidth().weight(1f)
-                )
-
-                MainscreenTextBox(str, Modifier.height(48.dp).width(160.dp))
-
-
-            }
-            Slider(
-                value = carrierFr!!,
-                onValueChange = { Global.ch1_Carrier_Fr.value = it },
-                Modifier
+           Slider(
+                valueRange = 0.1f..100f,
+                value = fmFr.value!!,
+                onValueChange = {
+                    if (str == "CH0") Global.ch1_FM_Fr.value =
+                        it else Global.ch2_FM_Fr.value = it
+                },
+                modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 8.dp, end = 8.dp),
                 colors = SliderDefaults.colors(thumbColor = Color.LightGray)
             )
 /////////////////////////
-
-
             Row(
-                Modifier.padding(top = 8.dp, start = 8.dp, end= 8.dp).height(48.dp),
+                Modifier
+                    .padding(top = 0.dp, start = 8.dp, end = 8.dp)
+                    .height(48.dp),
                 verticalAlignment = Alignment.CenterVertically
             )
             {
@@ -126,24 +139,36 @@ fun CardFM() {
                     color = Color.LightGray,
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
-                    modifier = Modifier.fillMaxWidth().weight(1f)
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f)
                 )
 
-                MainscreenTextBox(str, Modifier.height(48.dp).width(160.dp))
-
+                MainscreenTextBox(
+                    String.format("%.1f Hz", fmBase.value),
+                    Modifier
+                        .height(48.dp)
+                        .width(160.dp)
+                )
 
             }
             Slider(
-                value = carrierFr!!,
-                onValueChange = { Global.ch1_Carrier_Fr.value = it },
-                Modifier
+                valueRange = 200f..5000f,
+                value = fmBase.value!!,
+                onValueChange = {
+                    if (str == "CH0") Global.ch1_FM_Base.value =
+                        it else Global.ch2_FM_Base.value = it
+                },
+                modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 8.dp, end = 8.dp),
                 colors = SliderDefaults.colors(thumbColor = Color.LightGray)
             )
 ////////
             Row(
-                Modifier.padding(top = 8.dp, start = 8.dp, end= 8.dp).height(48.dp),
+                Modifier
+                    .padding(top = 8.dp, start = 8.dp, end = 8.dp)
+                    .height(48.dp),
                 verticalAlignment = Alignment.CenterVertically
             )
             {
@@ -152,35 +177,36 @@ fun CardFM() {
                     color = Color.LightGray,
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
-                    modifier = Modifier.fillMaxWidth().weight(1f)
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f)
                 )
 
-                MainscreenTextBox(str, Modifier.height(48.dp).width(160.dp))
+                MainscreenTextBox(
+                    String.format("%.1f Hz", fmDev.value),
+                    Modifier
+                        .height(48.dp)
+                        .width(160.dp)
+                )
 
 
             }
             Slider(
-                value = carrierFr!!,
-                onValueChange = { Global.ch1_Carrier_Fr.value = it },
-                Modifier
+                valueRange = 0.1f..2500f,
+                value = fmDev.value!!,
+                onValueChange = {
+                    if (str == "CH0") Global.ch1_FM_Dev.value =
+                        it else Global.ch2_FM_Dev.value = it
+                },
+                modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 8.dp, end = 8.dp),
                 colors = SliderDefaults.colors(thumbColor = Color.LightGray)
             )
 
 
-
-
-
-
-
-
-        }
+        //}
     }
-
-
-
-
 
 
 }

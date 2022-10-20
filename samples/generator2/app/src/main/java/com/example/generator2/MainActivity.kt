@@ -124,19 +124,9 @@ class MainActivity : ComponentActivity() {
             Global.itemlistFM.add(itemList(Global.patchMod, arrFilesMod[i], 0))
         }
 
-        val imageLoader = ImageLoader.Builder(applicationContext)
-            .components {
-                if (SDK_INT >= 28) {
-                    //add(GifDecoder.Factory())
-                    add(ImageDecoderDecoder.Factory())
-                } else {
-                    add(GifDecoder.Factory())
-                }
-            }
-            .build()
 
 
-
+        Global.sendAlltoGen()
 
         setContent {
 

@@ -330,8 +330,6 @@ public class Utils {
     //Для спиннера, отсылка массива
     public static void Spinner_Send_Buffer(String CH, String Mod, String name)
     {
-
-
         //String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).toString();
         String path = "";
 
