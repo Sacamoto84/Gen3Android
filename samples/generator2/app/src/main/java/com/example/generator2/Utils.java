@@ -30,6 +30,7 @@ import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -149,7 +150,7 @@ public class Utils {
         }
         catch (IOException e)
         {
-            Log.i("!IOException! :readFileMod2048byte:", "Error");
+            Log.i("readFileMod2048byte:", "!IOException! : Error");
         }
 
         return fileData;
@@ -329,11 +330,15 @@ public class Utils {
     //Для спиннера, отсылка массива
     public static void Spinner_Send_Buffer(String CH, String Mod, String name)
     {
-        String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).toString();
+
+
+        //String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).toString();
+        String path = "";
+
         if (Mod.equals("CR"))
-            path += "/Flash/Carrier/"+name + ".dat";
+            path += patchCarrier  +name +".dat";
         else
-            path+= "/Flash/Mod/" +name +".dat" ;
+            path += patchMod      +name +".dat" ;
 
         byte [] buf = readFileMod2048byte(path); //Здесь должны прочитать файл и записать в массив;
 

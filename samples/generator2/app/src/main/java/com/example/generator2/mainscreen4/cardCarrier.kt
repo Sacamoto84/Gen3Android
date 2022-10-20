@@ -65,14 +65,14 @@ fun CardCarrier(str: String = "CH0") {
                 verticalAlignment = Alignment.CenterVertically
             ) {
 
-                val ch_EN: State<Boolean?> = if (str == "CH0") {
+                val chEN: State<Boolean?> = if (str == "CH0") {
                     Global.ch1_EN.observeAsState()
                 } else {
                     Global.ch2_EN.observeAsState()
                 }
 
                 Switch(
-                    checked = ch_EN.value!!,
+                    checked = chEN.value!!,
                     onCheckedChange = {
                         if (str == "CH0") Global.ch1_EN.value = it else Global.ch2_EN.value = it
                     })

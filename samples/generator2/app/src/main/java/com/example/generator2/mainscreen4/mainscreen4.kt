@@ -67,10 +67,10 @@ fun mainsreen4() {
 
 
             CardCarrier("CH0")
-            //CardAM()
+            CardAM("CH0")
             //CardFM()
             CardCarrier("CH1")
-            //CardAM()
+            CardAM("CH1")
             //CardFM()
         }
 

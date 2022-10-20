@@ -14,6 +14,7 @@ import androidx.compose.material.SliderDefaults
 import androidx.compose.material.Switch
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -28,7 +29,7 @@ import com.example.generator2.ui.wiget.UIspinner
 
 
 @Composable
-fun CardAM() {
+fun CardAM(str: String = "CH0") {
 
     Card(
 
@@ -43,7 +44,7 @@ fun CardAM() {
         {
             Box(
                 modifier = Modifier
-                    .background(Color(0xFF4CB050))
+                    .background(if (str == "CH0") Color(0xFF4CB050) else Color(0xFFC2AA10))
                     .height(30.dp)
                     .fillMaxWidth(),
                 contentAlignment = Alignment.Center
@@ -52,20 +53,33 @@ fun CardAM() {
                 Text("AM")
             }
 
-            val carrierFr by Global.ch1_Carrier_Fr.observeAsState()
+
+            val amFr: State<Float?> = if (str == "CH0") {
+                Global.ch1_AM_Fr.observeAsState()
+            } else {
+                Global.ch2_AM_Fr.observeAsState()
+            }
 
             Row(
                 Modifier.padding(top = 8.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
 
-                Switch(checked = true, onCheckedChange = {})
+                val amEN: State<Boolean?> = if (str == "CH0") {
+                    Global.ch1_AM_EN.observeAsState()
+                } else {
+                    Global.ch2_AM_EN.observeAsState()
+                }
 
-                val str = String.format("%.1f Hz", carrierFr)
-                MainscreenTextBox(str, Modifier.height(48.dp).fillMaxWidth().weight(1f))
+                Switch(checked = amEN.value!!, onCheckedChange = {
+                    if (str == "CH0") Global.ch1_AM_EN.value = it else Global.ch2_AM_EN.value = it
+
+                })
+
+                MainscreenTextBox(String.format("%.1f Hz", amFr.value), Modifier.height(48.dp).fillMaxWidth().weight(1f))
 
                 UIspinner.Spinner(
-                    "CH0",
+                    str,
                     "AM",
                     modifier = Modifier
                         .padding(top = 0.dp, start = 8.dp, end = 8.dp)
@@ -77,9 +91,13 @@ fun CardAM() {
             }
 
             Slider(
-                value = carrierFr!!,
-                onValueChange = { Global.ch1_Carrier_Fr.value = it },
-                Modifier
+                valueRange = 0.1f..100f,
+                value = amFr.value!!,
+                onValueChange = {
+                    if (str == "CH0") Global.ch1_AM_Fr.value =
+                        it else Global.ch2_AM_Fr.value = it
+                                },
+                modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 8.dp, end = 8.dp),
                 colors = SliderDefaults.colors(thumbColor = Color.LightGray)

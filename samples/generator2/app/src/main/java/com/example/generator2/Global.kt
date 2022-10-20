@@ -110,84 +110,84 @@ object Global : ViewModel(){
     {
 
         ch1_EN.observeForever { ch1_EN ->
-            Log.d("mySwitch", "onClick")
+            Log.d("observeForever", "onClick")
             PlaybackEngine.CH_EN(0, ch1_EN!!)
         }
 
         ch2_EN.observeForever { ch2_EN ->
-            Log.d("mySwitch", "onClick")
+            Log.d("observeForever", "onClick")
             PlaybackEngine.CH_EN(1, ch2_EN!!)
         }
 
         ch1_AM_EN.observeForever { ch1_AM_EN ->
-            Log.d("mySwitch", "onClick")
+            Log.d("observeForever", "onClick")
             PlaybackEngine.CH_AM_EN(0, ch1_AM_EN!!)
         }
 
         ch2_AM_EN.observeForever { ch2_AM_EN ->
-            Log.d("mySwitch", "onClick")
+            Log.d("observeForever", "onClick")
             PlaybackEngine.CH_AM_EN(1, ch2_AM_EN!!)
         }
 
         ch1_FM_EN.observeForever { ch1_FM_EN ->
-            Log.d("mySwitch", "onClick")
+            Log.d("observeForever", "onClick")
             PlaybackEngine.CH_AM_EN(0, ch1_FM_EN!!)
         }
 
         ch2_FM_EN.observeForever { ch2_FM_EN ->
-            Log.d("mySwitch", "onClick")
+            Log.d("observeForever", "onClick")
             PlaybackEngine.CH_AM_EN(1, ch2_FM_EN!!)
         }
 
 
         ch1_Carrier_Fr.observeForever { ch1_Carrier_Fr ->
-            Log.d("mySwitch", "onClick")
+            Log.d("observeForever", "onClick")
             PlaybackEngine.CH_Carrier_fr(0, ch1_Carrier_Fr!!)
         }
 
         ch2_Carrier_Fr.observeForever { ch2_Carrier_Fr ->
-            Log.d("mySwitch", "onClick")
+            Log.d("observeForever", "onClick")
             PlaybackEngine.CH_Carrier_fr(1, ch2_Carrier_Fr!!)
         }
 
 
         ch1_AM_Fr.observeForever { ch1_AM_Fr ->
-            Log.d("mySwitch", "onClick")
+            Log.d("observeForever", "onClick")
             PlaybackEngine.CH_AM_fr(0, ch1_AM_Fr!!)
         }
 
         ch2_AM_Fr.observeForever { ch2_AM_Fr ->
-            Log.d("mySwitch", "onClick")
+            Log.d("observeForever", "onClick")
             PlaybackEngine.CH_AM_fr(1, ch2_AM_Fr!!)
         }
 
         ch1_FM_Base.observeForever { ch1_FM_Base ->
-            Log.d("mySwitch", "onClick")
+            Log.d("observeForever", "onClick")
             PlaybackEngine.CH_FM_Base(0, ch1_FM_Base!!)
         }
 
         ch2_FM_Base.observeForever { ch2_FM_Base ->
-            Log.d("mySwitch", "onClick")
+            Log.d("observeForever", "onClick")
             PlaybackEngine.CH_FM_Base(1, ch2_FM_Base!!)
         }
 
         ch1_FM_Dev.observeForever { ch1_FM_Dev ->
-            Log.d("mySwitch", "onClick")
+            Log.d("observeForever", "onClick")
             PlaybackEngine.CH_FM_Dev(0, ch1_FM_Dev!!)
         }
 
         ch2_FM_Dev.observeForever { ch2_FM_Dev ->
-            Log.d("mySwitch", "onClick")
+            Log.d("observeForever", "onClick")
             PlaybackEngine.CH_FM_Dev(1, ch2_FM_Dev!!)
         }
 
         ch1_FM_Fr.observeForever { ch1_FM_Fr ->
-            Log.d("mySwitch", "onClick")
+            Log.d("observeForever", "onClick")
             PlaybackEngine.CH_FM_fr(0, ch1_FM_Fr!!)
         }
 
         ch2_FM_Fr.observeForever { ch2_FM_Fr ->
-            Log.d("mySwitch", "onClick")
+            Log.d("observeForever", "onClick")
             PlaybackEngine.CH_FM_fr(1, ch2_FM_Fr!!)
         }
 
