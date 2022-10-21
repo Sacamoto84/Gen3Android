@@ -26,17 +26,18 @@ import kotlin.math.acos
 import kotlin.math.roundToInt
 import kotlin.math.sqrt
 
+
 @Composable
-fun InfinitiSlider(
-    modifier: Modifier,
-
+fun InfinitySlider(
+    modifier: Modifier = Modifier,
     image: ImageBitmap? = null,  //Фоновая картинка, неподвижная
-
     sensing: Float = 1.0f, //Чувствительность
-
-    rangeAngle: Float = 1000f,
     value: Float? = null, //Вывод icrementalAngle от 0 до rangeAngle при rangeAngle != 0, и от +- Float при rangeAngle = 0
-    onValueChange: (Float) -> Unit
+    onValueChange: (Float) -> Unit,
+    vertical: Boolean = false,    //Если вертикальный вариант
+    range: ClosedFloatingPointRange<Float> = 0f..1000f,
+    invert: Boolean = false,
+    visibleText: Boolean = true
 ) {
 
     val onValueChangeState = rememberUpdatedState(onValueChange)
@@ -58,19 +59,28 @@ fun InfinitiSlider(
             .fillMaxSize()
             .pointerInput(Unit) {
                 detectDragGestures(
-                    onDragStart =
-                    {
-                    },
+                    onDragStart = { },
                     onDrag =
                     { change, dragAmount ->
 
                         change.consumeAllChanges()
                         //offX += dragAmount.x
 
-                        icrementalAngle += dragAmount.x * sensing
+                        if (vertical) {
+                            if (invert)
+                                icrementalAngle -= dragAmount.y * sensing
+                            else
+                                icrementalAngle += dragAmount.y * sensing
+                        } else {
+                            if (invert)
+                                icrementalAngle -= dragAmount.x * sensing
+                            else
+                                icrementalAngle += dragAmount.x * sensing
+                        }
 
-                        if (icrementalAngle > rangeAngle) icrementalAngle = rangeAngle
-                        if (icrementalAngle < 0f) icrementalAngle = 0f
+                        if (icrementalAngle > range.endInclusive) icrementalAngle =
+                            range.endInclusive
+                        if (icrementalAngle < range.start) icrementalAngle = range.start
 
                         onValueChangeState.value.invoke(icrementalAngle)
 
@@ -88,12 +98,15 @@ fun InfinitiSlider(
     {
 
         if (image != null) {
-            Image(image, contentDescription = null, modifier = Modifier.fillMaxSize(), contentScale = ContentScale.FillBounds)
+            Image(
+                image,
+                contentDescription = null,
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.FillBounds
+            )
         }
-
-        Text(text = "${icrementalAngle.format(2)}", color = Color.White)
-
-
+        if (visibleText)
+            Text(text = "${icrementalAngle.format(2)}", color = Color.White)
     }
 
 

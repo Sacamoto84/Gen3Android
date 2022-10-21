@@ -35,7 +35,7 @@ fun mainsreen4() {
 
     Surface(
         modifier = Modifier.fillMaxSize(),
-        color = Color(0xFF13161B)
+        color = colorDarkBackground
 
     )
     {
@@ -53,7 +53,7 @@ fun mainsreen4() {
             ) {
                 tabItems.forEachIndexed { index, item ->
                     Tab(
-                        modifier = Modifier.background(if (tabIndex.value == index) Color(0xFF2A2D36) else Color.Transparent),
+                        modifier = Modifier.background(if (tabIndex.value == index) colorLightBackground else Color.Transparent),
                         selected = tabIndex.value == index,
                         onClick = { tabIndex.value = index },
                         selectedContentColor = Color.White,

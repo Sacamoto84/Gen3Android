@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
@@ -27,6 +28,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.generator2.Global
+import com.example.generator2.ui.wiget.InfinitySlider
 import com.example.generator2.ui.wiget.UIspinner
 
 @Composable
@@ -89,7 +91,9 @@ fun CardFM(str: String = "CH0") {
 
 
 
-                Switch(checked = fmEN.value!!, onCheckedChange = {
+                Switch(
+                    modifier= Modifier.width(ms4SwitchWidth),
+                    checked = fmEN.value!!, onCheckedChange = {
                     if (str == "CH0") Global.ch1_FM_EN.value = it else Global.ch2_FM_EN.value = it
                 })
 
@@ -129,19 +133,19 @@ fun CardFM(str: String = "CH0") {
 /////////////////////////
             Row(
                 Modifier
-                    .padding(top = 0.dp, start = 8.dp, end = 8.dp)
+                    .padding(top = 0.dp, start = 0.dp, end = 8.dp)
                     .height(48.dp),
                 verticalAlignment = Alignment.CenterVertically
             )
             {
                 Text(
-                    text = "База",
+                    text = "  База",
                     color = Color.LightGray,
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(1f)
+                    modifier = Modifier.width(ms4SwitchWidth)
+                        //.fillMaxWidth()
+                        //.weight(1f)
                 )
 
                 MainscreenTextBox(
@@ -151,9 +155,21 @@ fun CardFM(str: String = "CH0") {
                         .width(160.dp)
                 )
 
+                InfinitySlider(
+                    value = fmBase.value, sensing = sensetingSliderFmBase, range = rangeSliderFmBase,
+                    onValueChange = { if (str == "CH0") Global.ch1_FM_Base.value =
+                        it else Global.ch2_FM_Base.value = it },
+                    modifier = Modifier.background(Color.Red).size(48.dp), vertical = true, invert = true, visibleText = false
+                )
+
+
+
+
+
             }
+
             Slider(
-                valueRange = 200f..5000f,
+                valueRange = rangeSliderFmBase,
                 value = fmBase.value!!,
                 onValueChange = {
                     if (str == "CH0") Global.ch1_FM_Base.value =
@@ -164,6 +180,9 @@ fun CardFM(str: String = "CH0") {
                     .padding(start = 8.dp, end = 8.dp),
                 colors = SliderDefaults.colors(thumbColor = Color.LightGray)
             )
+
+
+
 ////////
             Row(
                 Modifier
@@ -191,6 +210,7 @@ fun CardFM(str: String = "CH0") {
 
 
             }
+
             Slider(
                 valueRange = 0.1f..2500f,
                 value = fmDev.value!!,

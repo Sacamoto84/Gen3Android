@@ -98,7 +98,6 @@ object Global : ViewModel(){
 
     }
 
-
     fun observe()
     {
 
@@ -135,12 +134,14 @@ object Global : ViewModel(){
 
         ch1_Carrier_Fr.observeForever { ch1_Carrier_Fr ->
             Log.d("observeForever", "onClick")
-            PlaybackEngine.CH_Carrier_fr(0, ch1_Carrier_Fr!!)
+            val fr = ch1_Carrier_Fr.toInt().toFloat()
+            PlaybackEngine.CH_Carrier_fr(0, fr)
         }
 
         ch2_Carrier_Fr.observeForever { ch2_Carrier_Fr ->
             Log.d("observeForever", "onClick")
-            PlaybackEngine.CH_Carrier_fr(1, ch2_Carrier_Fr!!)
+            val fr = ch2_Carrier_Fr.toInt().toFloat()
+            PlaybackEngine.CH_Carrier_fr(1, fr)
         }
 
         ch1_AM_Fr.observeForever { ch1_AM_Fr ->

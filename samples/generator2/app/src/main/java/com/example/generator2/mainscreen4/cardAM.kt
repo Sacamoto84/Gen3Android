@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -81,9 +82,8 @@ fun CardAM(str: String = "CH0") {
             verticalAlignment = Alignment.CenterVertically
         ) {
 
-
-
             Switch(
+                modifier= Modifier.width(ms4SwitchWidth),
                 checked = amEN.value!!,
                 onCheckedChange = {
                     if (str == "CH0") Global.ch1_AM_EN.value = it else Global.ch2_AM_EN.value = it
