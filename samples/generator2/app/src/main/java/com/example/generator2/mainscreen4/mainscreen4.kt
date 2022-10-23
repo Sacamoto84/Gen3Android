@@ -1,6 +1,10 @@
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -43,12 +47,12 @@ fun mainsreen4() {
         val tabItems = listOf<String>("CH0", "CH1", "Setting")
         val tabIndex = remember { mutableStateOf(0) }
 
-        Column(Modifier.verticalScroll(rememberScrollState())) {
-
+        Column(Modifier.fillMaxSize()) {
             TabRow(
                 selectedTabIndex = tabIndex.value,
                 backgroundColor = Color(0xFF37A83C),
                 indicator = {}
+            
 
             ) {
                 tabItems.forEachIndexed { index, item ->
@@ -66,17 +70,35 @@ fun mainsreen4() {
             }
 
 
-            CardCarrier("CH0")
-            //CardAM("CH0")
-            //CardFM("CH0")
-            CardCarrier("CH1")
-            //CardAM("CH1")
-            //CardFM("CH1")
+            Column(
+                Modifier
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState()),
+                verticalArrangement = Arrangement.SpaceEvenly
+            ) {
+
+
+                Box(
+                    //modifier = Modifier.background(Color.Magenta)
+                )
+                {
+                    CardCarrier("CH0")
+                }
+
+
+
+                Box(
+                //modifier = Modifier.background(Color.LightGray)
+
+                     )
+                {
+                    CardCarrier("CH1")
+                }
+                Spacer(modifier = Modifier.height(16.dp))
+            }
+
+
         }
-
-
-
-
     }
 
 }

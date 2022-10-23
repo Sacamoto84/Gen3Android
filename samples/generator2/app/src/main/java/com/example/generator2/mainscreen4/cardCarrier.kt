@@ -2,6 +2,9 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -50,29 +53,27 @@ fun CardCarrier(str: String = "CH0") {
     Card(
 
         backgroundColor = colorLightBackground, modifier = Modifier
-            .wrapContentHeight()
+            //.wrapContentHeight()
             .fillMaxWidth()
-            .padding(start = 16.dp, end = 16.dp, top = 16.dp),
+            .padding(start = 8.dp, end = 8.dp, top = 8.dp, bottom = 8.dp),
         elevation = 5.dp
     )
     {
-        Column()
+
+        Column(
+            modifier = Modifier.fillMaxSize()
+        )
         {
             Box(
                 modifier = Modifier
                     .background(if (str == "CH0") colorGreen else colorOrange)
-                    .height(30.dp)
+                    .height(8.dp)
                     .fillMaxWidth(),
                 contentAlignment = Alignment.Center
             )
             {
-                Text(str)
+                //Text(str)
             }
-
-
-
-
-
 
             Row(
                 Modifier.padding(top = 8.dp),
@@ -86,15 +87,6 @@ fun CardCarrier(str: String = "CH0") {
                     onCheckedChange = {
                         if (str == "CH0") Global.ch1_EN.value = it else Global.ch2_EN.value = it
                     })
-
-
-
-
-
-
-
-
-
 
                 MainscreenTextBox(
                     str = String.format("%d", carrierFr.value!!.toInt()),
@@ -113,9 +105,7 @@ fun CardCarrier(str: String = "CH0") {
                         if (str == "CH0") Global.ch1_Carrier_Fr.value =
                             it else Global.ch2_Carrier_Fr.value = it
                     },
-                    modifier = Modifier
-                        .background(Color.Red)
-                        .size(48.dp),
+                    modifier = modifierInfinitySlider,
                     vertical = true,
                     invert = true,
                     visibleText = false
@@ -133,18 +123,21 @@ fun CardCarrier(str: String = "CH0") {
 
             }
 
-            Slider(
-                valueRange = rangeSliderCr,
-                value = carrierFr.value!!,
-                onValueChange = {
-                    if (str == "CH0") Global.ch1_Carrier_Fr.value =
-                        it else Global.ch2_Carrier_Fr.value = it
-                },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 8.dp, end = 8.dp),
-                colors = SliderDefaults.colors(thumbColor = Color.LightGray)
-            )
+//            Slider(
+//                valueRange = rangeSliderCr,
+//                value = carrierFr.value!!,
+//                onValueChange = {
+//                    if (str == "CH0") Global.ch1_Carrier_Fr.value =
+//                        it else Global.ch2_Carrier_Fr.value = it
+//                },
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .padding(start = 8.dp, end = 8.dp),
+//                colors = SliderDefaults.colors(thumbColor = Color.LightGray),
+//                steps = stepSliderCr
+//            )
+
+            Spacer(modifier = Modifier.height(8.dp))
 
             CardAM(str)
             CardFM(str)
@@ -153,4 +146,6 @@ fun CardCarrier(str: String = "CH0") {
 
 
     }
+
+
 }

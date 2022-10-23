@@ -1,7 +1,9 @@
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -69,160 +71,217 @@ fun CardFM(str: String = "CH0") {
 //        elevation = 5.dp
 //    )
 //    {
-        Column()
+    Column()
+    {
+        Box(
+            modifier = Modifier
+                .background(if (str == "CH0") colorGreen else colorOrange)
+                .height(8.dp)
+                .fillMaxWidth(),
+            contentAlignment = Alignment.Center
+        )
         {
-            Box(
-                modifier = Modifier
-                    .background(if (str == "CH0") colorGreen else colorOrange)
-                    .height(30.dp)
-                    .fillMaxWidth(),
-                contentAlignment = Alignment.Center
-            )
-            {
-                Text("FM")
-            }
+            //Text("FM")
+        }
 
-            Row(
-                Modifier
-                    .padding(top = 8.dp)
-                    .height(48.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
+        Row(
+            Modifier
+                .padding(top = 8.dp)
+                .height(48.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
 
 
-
-                Switch(
-                    modifier= Modifier.width(ms4SwitchWidth),
-                    checked = fmEN.value!!, onCheckedChange = {
+            Switch(
+                modifier = Modifier.width(ms4SwitchWidth),
+                checked = fmEN.value!!, onCheckedChange = {
                     if (str == "CH0") Global.ch1_FM_EN.value = it else Global.ch2_FM_EN.value = it
                 })
 
-                MainscreenTextBox(
-                    String.format("%.1f Hz", fmFr.value),
-                    modifier = Modifier
-                        .fillMaxHeight()
-                        .fillMaxWidth()
-                        .weight(1f)
-                )
-
-                UIspinner.Spinner(
-                    str,
-                    "FM",
-                    modifier = Modifier
-                        .padding(top = 0.dp, start = 8.dp, end = 8.dp)
-                        .wrapContentWidth()
-                        //.fillMaxWidth()
-                        .clip(shape = RoundedCornerShape(4.dp))
-                        .background(Color.Black)
-                )
-
-            }
-
-           Slider(
-                valueRange = 0.1f..100f,
-                value = fmFr.value!!,
-                onValueChange = {
-                    if (str == "CH0") Global.ch1_FM_Fr.value =
-                        it else Global.ch2_FM_Fr.value = it
-                },
+            MainscreenTextBox(
+                String.format("%.1f Hz", fmFr.value),
                 modifier = Modifier
+                    .fillMaxHeight()
                     .fillMaxWidth()
-                    .padding(start = 8.dp, end = 8.dp),
-                colors = SliderDefaults.colors(thumbColor = Color.LightGray)
+                    .weight(1f)
             )
+
+            UIspinner.Spinner(
+                str,
+                "FM",
+                modifier = Modifier
+                    .padding(top = 0.dp, start = 8.dp, end = 8.dp)
+                    .wrapContentWidth()
+                    //.fillMaxWidth()
+                    .clip(shape = RoundedCornerShape(4.dp))
+                    .background(Color.Black)
+            )
+
+        }
+
+//        Slider(
+//            valueRange = 0.1f..100f,
+//            value = fmFr.value!!,
+//            onValueChange = {
+//                if (str == "CH0") Global.ch1_FM_Fr.value =
+//                    it else Global.ch2_FM_Fr.value = it
+//            },
+//            modifier = Modifier
+//                .fillMaxWidth()
+//                .padding(start = 8.dp, end = 8.dp),
+//            colors = SliderDefaults.colors(thumbColor = Color.LightGray)
+//        )
 /////////////////////////
-            Row(
-                Modifier
-                    .padding(top = 0.dp, start = 0.dp, end = 8.dp)
-                    .height(48.dp),
-                verticalAlignment = Alignment.CenterVertically
+        
+        
+        //База 
+        Row(
+            Modifier
+                .padding(top = 8.dp, start = 0.dp, end = 8.dp)
+                .height(48.dp),
+            verticalAlignment = Alignment.CenterVertically
+        )
+        {
+            Text(
+                text = "  База",
+                color = Color.LightGray,
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier
+                    .width(ms4SwitchWidth)
+                    .fillMaxWidth()
+                    .weight(1f)
             )
-            {
-                Text(
-                    text = "  База",
-                    color = Color.LightGray,
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.width(ms4SwitchWidth)
-                        //.fillMaxWidth()
-                        //.weight(1f)
-                )
 
-                MainscreenTextBox(
-                    String.format("%.1f Hz", fmBase.value),
-                    Modifier
-                        .height(48.dp)
-                        .width(160.dp)
-                )
+            MainscreenTextBox(
+                String.format("%.1f Hz", fmBase.value),
+                Modifier
+                    .height(48.dp)
+                    .width(160.dp)
+            )
 
-                InfinitySlider(
-                    value = fmBase.value, sensing = sensetingSliderFmBase, range = rangeSliderFmBase,
-                    onValueChange = { if (str == "CH0") Global.ch1_FM_Base.value =
-                        it else Global.ch2_FM_Base.value = it },
-                    modifier = Modifier.background(Color.Red).size(48.dp), vertical = true, invert = true, visibleText = false
-                )
-
-
-
-
-
-            }
-
-            Slider(
-                valueRange = rangeSliderFmBase,
-                value = fmBase.value!!,
+            InfinitySlider(
+                value = fmBase.value,
+                sensing = sensetingSliderFmBase*8,
+                range = rangeSliderFmBase,
                 onValueChange = {
                     if (str == "CH0") Global.ch1_FM_Base.value =
                         it else Global.ch2_FM_Base.value = it
                 },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 8.dp, end = 8.dp),
-                colors = SliderDefaults.colors(thumbColor = Color.LightGray)
+                modifier = modifierInfinitySlider
+                ,
+                vertical = true,
+                invert = true,
+                visibleText = false
             )
 
+
+            InfinitySlider(
+                value = fmBase.value,
+                sensing = sensetingSliderFmBase,
+                range = rangeSliderFmBase,
+                onValueChange = {
+                    if (str == "CH0") Global.ch1_FM_Base.value =
+                        it else Global.ch2_FM_Base.value = it
+                },
+                modifier = modifierInfinitySlider
+                    ,
+                vertical = true,
+                invert = true,
+                visibleText = false
+            )
+
+
+        }
+
+//        Slider(
+//            valueRange = rangeSliderFmBase,
+//            value = fmBase.value!!,
+//            onValueChange = {
+//                if (str == "CH0") Global.ch1_FM_Base.value =
+//                    it else Global.ch2_FM_Base.value = it
+//            },
+//            modifier = Modifier
+//                .fillMaxWidth()
+//                .padding(start = 8.dp, end = 8.dp),
+//            colors = SliderDefaults.colors(thumbColor = Color.LightGray),
+//            steps = stepSliderFmBase
+//        )
 
 
 ////////
-            Row(
-                Modifier
-                    .padding(top = 8.dp, start = 8.dp, end = 8.dp)
-                    .height(48.dp),
-                verticalAlignment = Alignment.CenterVertically
+        Row(
+            Modifier
+                .padding(top = 8.dp, start = 8.dp, end = 8.dp)
+                .height(48.dp),
+            verticalAlignment = Alignment.CenterVertically
+        )
+        {
+            Text(
+                text = " Девиация ",
+                color = Color.LightGray,
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f)
             )
-            {
-                Text(
-                    text = "Девиация",
-                    color = Color.LightGray,
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(1f)
-                )
 
-                MainscreenTextBox(
-                    String.format("%.1f Hz", fmDev.value),
-                    Modifier
-                        .height(48.dp)
-                        .width(160.dp)
-                )
+            MainscreenTextBox(
+                String.format("%.1f Hz", fmDev.value),
+                Modifier
+                    .height(48.dp)
+                    .width(160.dp)
+            )
 
 
-            }
-
-            Slider(
-                valueRange = 0.1f..2500f,
-                value = fmDev.value!!,
+            InfinitySlider(
+                value = fmDev.value,
+                sensing = sensetingSliderFmDev*8,
+                range = rangeSliderFmDev,
                 onValueChange = {
                     if (str == "CH0") Global.ch1_FM_Dev.value =
                         it else Global.ch2_FM_Dev.value = it
                 },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 8.dp, end = 8.dp),
-                colors = SliderDefaults.colors(thumbColor = Color.LightGray)
+                modifier = modifierInfinitySlider
+                ,
+                vertical = true,
+                invert = true,
+                visibleText = false
             )
+
+            InfinitySlider(
+                value = fmDev.value,
+                sensing = sensetingSliderFmDev,
+                range = rangeSliderFmDev,
+                onValueChange = {
+                    if (str == "CH0") Global.ch1_FM_Dev.value =
+                        it else Global.ch2_FM_Dev.value = it
+                },
+                modifier = modifierInfinitySlider
+                    ,
+                vertical = true,
+                invert = true,
+                visibleText = false
+            )
+
+
+        }
+
+        
+        Spacer(modifier = Modifier.height(8.dp))
+//        Slider(
+//            valueRange = rangeSliderFmDev,
+//            value = fmDev.value!!,
+//            onValueChange = {
+//                if (str == "CH0") Global.ch1_FM_Dev.value =
+//                    it else Global.ch2_FM_Dev.value = it
+//            },
+//            modifier = Modifier
+//                .fillMaxWidth()
+//                .padding(start = 8.dp, end = 8.dp),
+//            colors = SliderDefaults.colors(thumbColor = Color.LightGray)
+//        )
 
 
         //}

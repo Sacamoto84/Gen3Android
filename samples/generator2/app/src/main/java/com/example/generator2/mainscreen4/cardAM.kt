@@ -2,6 +2,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -69,12 +70,12 @@ fun CardAM(str: String = "CH0") {
         Box(
             modifier = Modifier
                 .background(if (str == "CH0") colorGreen else colorOrange)
-                .height(30.dp)
+                .height(8.dp)
                 .fillMaxWidth(),
             contentAlignment = Alignment.Center
         )
         {
-            Text("AM")
+            //Text("AM")
         }
 
         Row(
@@ -109,18 +110,20 @@ fun CardAM(str: String = "CH0") {
 
         }
 
-        Slider(
-            valueRange = 0.1f..100f,
-            value = amFr.value!!,
-            onValueChange = {
-                if (str == "CH0") Global.ch1_AM_Fr.value =
-                    it else Global.ch2_AM_Fr.value = it
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 8.dp, end = 8.dp),
-            colors = SliderDefaults.colors(thumbColor = Color.LightGray)
-        )
+        Spacer(modifier = Modifier.height(8.dp))
+
+//        Slider(
+//            valueRange = 0.1f..100f,
+//            value = amFr.value!!,
+//            onValueChange = {
+//                if (str == "CH0") Global.ch1_AM_Fr.value =
+//                    it else Global.ch2_AM_Fr.value = it
+//            },
+//            modifier = Modifier
+//                .fillMaxWidth()
+//                .padding(start = 8.dp, end = 8.dp),
+//            colors = SliderDefaults.colors(thumbColor = Color.LightGray)
+//        )
 
 
     }
