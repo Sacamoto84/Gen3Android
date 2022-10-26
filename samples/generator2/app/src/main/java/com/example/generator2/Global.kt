@@ -155,23 +155,27 @@ object Global : ViewModel(){
         }
 
         ch1_FM_Base.observeForever { ch1_FM_Base ->
+            val fr = ch1_FM_Base.toInt().toFloat()
             Log.d("observeForever", "onClick")
-            PlaybackEngine.CH_FM_Base(0, ch1_FM_Base!!)
+            PlaybackEngine.CH_FM_Base(0, fr)
         }
 
         ch2_FM_Base.observeForever { ch2_FM_Base ->
+            val fr = ch2_FM_Base.toInt().toFloat()
             Log.d("observeForever", "onClick")
-            PlaybackEngine.CH_FM_Base(1, ch2_FM_Base!!)
+            PlaybackEngine.CH_FM_Base(1, fr)
         }
 
         ch1_FM_Dev.observeForever { ch1_FM_Dev ->
+            val fr = ch1_FM_Dev.toInt().toFloat()
             Log.d("observeForever", "onClick")
-            PlaybackEngine.CH_FM_Dev(0, ch1_FM_Dev!!)
+            PlaybackEngine.CH_FM_Dev(0, fr)
         }
 
         ch2_FM_Dev.observeForever { ch2_FM_Dev ->
+            val fr = ch2_FM_Dev.toInt().toFloat()
             Log.d("observeForever", "onClick")
-            PlaybackEngine.CH_FM_Dev(1, ch2_FM_Dev!!)
+            PlaybackEngine.CH_FM_Dev(1, fr)
         }
 
         ch1_FM_Fr.observeForever { ch1_FM_Fr ->

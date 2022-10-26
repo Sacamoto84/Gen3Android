@@ -106,6 +106,22 @@ fun CardFM(str: String = "CH0") {
                     .weight(1f)
             )
 
+            InfinitySlider(
+                value = fmFr.value,
+                sensing = if ( fmFr.value!! < 10.0F) sensetingSliderAmFm else sensetingSliderAmFm*10f,
+                range = rangeSliderAmFm,
+                onValueChange = {
+                    if (str == "CH0") Global.ch1_FM_Fr.value =
+                        it else Global.ch2_FM_Fr.value = it
+                },
+                modifier = modifierInfinitySlider
+                ,
+                vertical = true,
+                invert = true,
+                visibleText = false
+            )
+
+
             UIspinner.Spinner(
                 str,
                 "FM",
@@ -154,7 +170,7 @@ fun CardFM(str: String = "CH0") {
             )
 
             MainscreenTextBox(
-                String.format("%.1f Hz", fmBase.value),
+                String.format("%d", fmBase.value!!.toInt()),
                 Modifier
                     .height(48.dp)
                     .width(160.dp)
@@ -228,7 +244,7 @@ fun CardFM(str: String = "CH0") {
             )
 
             MainscreenTextBox(
-                String.format("%.1f Hz", fmDev.value),
+                String.format("%d", fmDev.value!!.toInt()),
                 Modifier
                     .height(48.dp)
                     .width(160.dp)

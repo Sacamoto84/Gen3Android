@@ -27,6 +27,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.generator2.Global
+import com.example.generator2.ui.wiget.InfinitySlider
 import com.example.generator2.ui.wiget.UIspinner
 
 
@@ -39,11 +40,7 @@ fun CardAM(str: String = "CH0") {
         Global.ch2_AM_EN.observeAsState()
     }
 
-    val amFr: State<Float?> = if (str == "CH0") {
-        Global.ch1_AM_Fr.observeAsState()
-    } else {
-        Global.ch2_AM_Fr.observeAsState()
-    }
+
 
     //Card(
 //
@@ -90,12 +87,33 @@ fun CardAM(str: String = "CH0") {
                     if (str == "CH0") Global.ch1_AM_EN.value = it else Global.ch2_AM_EN.value = it
                 })
 
+            val amFr: State<Float?> = if (str == "CH0") {
+                Global.ch1_AM_Fr.observeAsState()
+            } else {
+                Global.ch2_AM_Fr.observeAsState()
+            }
+
             MainscreenTextBox(
                 String.format("%.1f Hz", amFr.value),
                 Modifier
                     .height(48.dp)
                     .fillMaxWidth()
                     .weight(1f)
+            )
+
+            InfinitySlider(
+                value = amFr.value,
+                sensing = if ( amFr.value!! < 10.0F) sensetingSliderAmFm else sensetingSliderAmFm*10f,
+                range = rangeSliderAmFm,
+                onValueChange = {
+                    if (str == "CH0") Global.ch1_AM_Fr.value =
+                        it else Global.ch2_AM_Fr.value = it
+                },
+                modifier = modifierInfinitySlider
+                ,
+                vertical = true,
+                invert = true,
+                visibleText = false
             )
 
             UIspinner.Spinner(

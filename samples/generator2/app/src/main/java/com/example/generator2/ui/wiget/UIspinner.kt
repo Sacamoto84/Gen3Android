@@ -31,7 +31,12 @@ import com.example.generator2.itemList
 object UIspinner {
 
     @Composable
-    fun Spinner(CH: String, Mod: String, transparrent :Boolean = false, modifier: Modifier = Modifier ) {
+    fun Spinner(
+        CH: String,
+        Mod: String,
+        transparrent: Boolean = false,
+        modifier: Modifier = Modifier
+    ) {
 
         val expanded = remember { mutableStateOf(false) }
 
@@ -65,96 +70,121 @@ object UIspinner {
             if (element.name == currentValue) indexBitmapCurrent.value = index
         }
 
-            Box(modifier = Modifier
+        Box(
+            modifier = Modifier
                 //.fillMaxSize()
-                .background(Color.Transparent).then(modifier), contentAlignment = Alignment.Center
+                .background(Color.Transparent)
+                .then(modifier), contentAlignment = Alignment.Center
+        )
+        {
+            Row(modifier = Modifier
+                .clickable {
+                    expanded.value = !expanded.value
+                }
+                .background(color = if (transparrent) Color(0x00000000) else Color(0xFF13161B)),
+                //horizontalAlignment = Alignment.CenterHorizontally,
+                verticalAlignment = Alignment.CenterVertically
+                //,
+                //.align(Alignment.Center)
             )
             {
-                    Row(modifier = Modifier
-                        .clickable {
-                            expanded.value = !expanded.value
-                        }
-                        .background(  color = if (transparrent)  Color(0x00000000) else Color(0xFF13161B))
-                        ,
-                        //horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalAlignment = Alignment.CenterVertically
-                        //,
-                        //.align(Alignment.Center)
-                    )
-                    {
 
-                        Image(
-                            bitmap = itemlist[indexBitmapCurrent.value].bitmap.asImageBitmap(),
-                            contentDescription = null
-                            ,modifier = Modifier.width( 96.dp ).height(48.dp).padding(start = 4.dp) //128 64
-                        )
+                Image(
+                    bitmap = itemlist[indexBitmapCurrent.value].bitmap.asImageBitmap(),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .width(104.dp)
+                        .height(48.dp)
+                        .padding(start = 4.dp, end = 4.dp) //128 64
+                )
 
 //                        Text(text = currentValue, modifier = Modifier.fillMaxWidth().padding(start=8.dp).weight(1f)
 //                            , color = Color(0xFFE7E1D5)
 //                            , fontSize = 24.sp, textAlign = TextAlign.Center)
 
-                        Icon(imageVector = Icons.Filled.ArrowDropDown, contentDescription = null,
-                            modifier = Modifier.width( 16.dp ), //32
-                            tint = Color(0xFFE7E1D5))
+                //Icon(
+                //    imageVector = Icons.Filled.ArrowDropDown,
+                //    contentDescription = null,
+                //    modifier = Modifier.width(8.dp), //32
+                //    tint = Color(0xFFE7E1D5)
+                //)
 
-                        DropdownMenu(expanded = expanded.value, onDismissRequest = {
-                            expanded.value = false
-                        }, modifier = Modifier.background(color = if (transparrent)  Color(0) else Color(0xFF454954))
-                        )
-                        {
+                DropdownMenu(
+                    expanded = expanded.value,
+                    onDismissRequest = {
+                        expanded.value = false
+                    },
+                    modifier = Modifier.background(
+                        color = if (transparrent) Color(0) else Color(0xFF454954)
+                    )
+                )
+                {
 
-                            itemlist.forEach {
-                                DropdownMenuItem(
-                                    modifier = Modifier.background(Color(0xFF454954)).width(340.dp)
+                    itemlist.forEach {
+                        DropdownMenuItem(
+                            modifier = Modifier
+                                .background(Color(0xFF454954))
+                                .width(340.dp),
+                            onClick = {
+                                currentValue = it.name
+                                expanded.value = false
 
-                                    ,onClick = {
-                                    currentValue = it.name
-                                    expanded.value = false
-
-                                    if (CH == "CH0") {
-                                        when (Mod) {
-                                            "CR" -> {
-                                                Global.ch1_Carrier_Filename.value = currentValue
-                                            }
-                                            "AM" -> {
-                                                Global.ch1_AM_Filename.value = currentValue
-                                            }
-                                            "FM" -> {
-                                                Global.ch1_FM_Filename.value = currentValue
-                                            }
+                                if (CH == "CH0") {
+                                    when (Mod) {
+                                        "CR" -> {
+                                            Global.ch1_Carrier_Filename.value = currentValue
                                         }
-                                    } else {
-                                        when (Mod) {
-                                            "CR" -> {
-                                                Global.ch2_Carrier_Filename.value = currentValue
-                                            }
-                                            "AM" -> {
-                                                Global.ch2_AM_Filename.value = currentValue
-                                            }
-                                            "FM" -> {
-                                                Global.ch2_FM_Filename.value = currentValue
-                                            }
+
+                                        "AM" -> {
+                                            Global.ch1_AM_Filename.value = currentValue
+                                        }
+
+                                        "FM" -> {
+                                            Global.ch1_FM_Filename.value = currentValue
                                         }
                                     }
-                                        Utils.Spinner_Send_Buffer(
-                                            CH,
-                                            Mod,
-                                            it.name
-                                        ) //Читае м отсылаем массив
+                                } else {
+                                    when (Mod) {
+                                        "CR" -> {
+                                            Global.ch2_Carrier_Filename.value = currentValue
+                                        }
+
+                                        "AM" -> {
+                                            Global.ch2_AM_Filename.value = currentValue
+                                        }
+
+                                        "FM" -> {
+                                            Global.ch2_FM_Filename.value = currentValue
+                                        }
+                                    }
                                 }
-                                ) {
-                                        Image(
-                                            bitmap = it.bitmap.asImageBitmap(),
-                                            contentDescription = null, modifier = Modifier.padding(top = 4.dp, bottom = 4.dp, end = 4.dp).height(64.dp)
-                                        )
-                                        Text(text = it.name, color = Color(0xFFE7E1D5) , fontSize = 24.sp, textAlign = TextAlign.Center)
-                                }
+                                Utils.Spinner_Send_Buffer(
+                                    CH,
+                                    Mod,
+                                    it.name
+                                ) //Читае м отсылаем массив
                             }
+                        ) {
+                            Image(
+                                bitmap = it.bitmap.asImageBitmap(),
+                                contentDescription = null,
+                                modifier = Modifier
+                                    .padding(top = 4.dp, bottom = 4.dp, end = 4.dp)
+                                    .height(64.dp)
+                            )
+                            Text(
+                                text = it.name,
+                                color = Color(0xFFE7E1D5),
+                                fontSize = 24.sp,
+                                textAlign = TextAlign.Center
+                            )
                         }
                     }
-
-
+                }
             }
+
+
+        }
         //}
     }
 

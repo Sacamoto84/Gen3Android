@@ -17,18 +17,17 @@ val colorLightBackground = Color(0xFF2A2D36)
 //Ширина переключателей
 val ms4SwitchWidth = 64.dp
 
-
 val sensetingSliderCr = 0.2f
 val rangeSliderCr = 600f..4000f
-val stepSliderCr = 33
+
+val sensetingSliderAmFm = 0.01f
+val rangeSliderAmFm = 0.1f..100f
 
 val sensetingSliderFmBase = 0.2f
 val rangeSliderFmBase = 1000f..3000f
-val stepSliderFmBase = 19
 
 val sensetingSliderFmDev = 0.2f
 val rangeSliderFmDev = 1f..2500f
-//val stepSliderFmDev= 19
 
 
 val modifierInfinitySlider =

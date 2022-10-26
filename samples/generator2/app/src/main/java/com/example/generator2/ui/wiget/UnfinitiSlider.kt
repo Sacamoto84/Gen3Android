@@ -47,6 +47,10 @@ fun InfinitySlider(
 
     var offX by remember { mutableStateOf(0f) }    //Смещени, координаты текущего начала Box
 
+
+    val _sensing = rememberUpdatedState(sensing)
+
+
     Box(
         modifier = Modifier
             .then(modifier)
@@ -62,14 +66,14 @@ fun InfinitySlider(
 
                         if (vertical) {
                             if (invert)
-                                icrementalAngle -= dragAmount.y * sensing
+                                icrementalAngle -= dragAmount.y * _sensing.value
                             else
-                                icrementalAngle += dragAmount.y * sensing
+                                icrementalAngle += dragAmount.y * _sensing.value
                         } else {
                             if (invert)
-                                icrementalAngle -= dragAmount.x * sensing
+                                icrementalAngle -= dragAmount.x * _sensing.value
                             else
-                                icrementalAngle += dragAmount.x * sensing
+                                icrementalAngle += dragAmount.x * _sensing.value
                         }
 
                         if (icrementalAngle > range.endInclusive) icrementalAngle =
