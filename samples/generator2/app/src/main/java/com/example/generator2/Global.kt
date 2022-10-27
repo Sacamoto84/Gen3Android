@@ -63,6 +63,8 @@ object Global : ViewModel(){
     val onoffconfig1 : ConfigOnOff = ConfigOnOff()
 
 
+    //Скрипт
+    val scriptVisible = mutableStateOf(false) //Показать экран скрипта
 
 
 

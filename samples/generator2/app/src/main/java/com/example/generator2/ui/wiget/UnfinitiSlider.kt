@@ -50,7 +50,6 @@ fun InfinitySlider(
 
     val _sensing = rememberUpdatedState(sensing)
 
-
     Box(
         modifier = Modifier
             .then(modifier)
