@@ -11,6 +11,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.generator2.mainscreen4.bottomBarEnum
 import flipagram.assetcopylib.AssetCopier
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -63,8 +64,10 @@ object Global : ViewModel(){
     val onoffconfig1 : ConfigOnOff = ConfigOnOff()
 
 
-    //Скрипт
-    val scriptVisible = mutableStateOf(false) //Показать экран скрипта
+    //Пути для отрисовки нижнего меню
+    var bottomBarRoute = mutableStateOf( bottomBarEnum.HOME)
+
+
 
 
 

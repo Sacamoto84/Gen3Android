@@ -55,7 +55,7 @@ fun CardCarrier(str: String = "CH0") {
         backgroundColor = colorLightBackground, modifier = Modifier
             //.wrapContentHeight()
             .fillMaxWidth()
-            .padding(start = 8.dp, end = 8.dp, top = 8.dp, bottom = 8.dp),
+            .padding(start = 8.dp, end = 8.dp, top = 4.dp, bottom = 4.dp),
         elevation = 5.dp
     )
     {

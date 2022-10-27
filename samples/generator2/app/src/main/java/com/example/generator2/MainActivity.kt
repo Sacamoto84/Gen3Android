@@ -1,7 +1,6 @@
 package com.example.generator2
 
 //import com.example.generator2.ui.wiget.GestureOfDrag
-import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -13,7 +12,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -33,9 +31,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
-import coil.ImageLoader
-import coil.decode.GifDecoder
-import coil.decode.ImageDecoderDecoder
 import colorDarkBackground
 import com.example.generator2.Global.onoffconfig
 import com.example.generator2.Global.onoffconfig1
@@ -44,7 +39,7 @@ import com.example.generator2.ui.theme.Generator2Theme
 import com.example.generator2.ui.wiget.UImodifier.coloredShadow2
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import libs.KeepScreenOn
-import mainsreen4
+import com.example.generator2.mainscreen4.mainsreen4
 
 fun valuesList() = listOf(0f, 100f)
 
