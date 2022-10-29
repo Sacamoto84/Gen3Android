@@ -32,7 +32,7 @@ typedef struct {
     //Буфферы
     uint16_t buffer_carrier[1024];
     uint16_t buffer_am[1024];
-    uint16_t buffer_fm[512];
+    uint16_t buffer_fm[1024];
 
     uint16_t source_buffer_fm[1024]; //Используется для перерасчета модуляции
 
@@ -86,18 +86,20 @@ public:
     {
         int x, y;
         int i = 0;
-        x = CH1.FM_Base - CH1.FM_Dev;  y = CH1.FM_Dev * 2;
-        for (i = 0; i < 512; i++)
-            CH1.buffer_fm[i] =  x + (y * CH1.source_buffer_fm[i * 2] / 4095.0F);
+        x = CH1.FM_Base - CH1.FM_Dev;
+        y = CH1.FM_Dev * 2;
+        for (i = 0; i < 1024; i++)
+            CH1.buffer_fm[i] =  x + (y * CH1.source_buffer_fm[i] / 4095.0F);
     }
 
     void CreateFM_CH2(void)
     {
         int x, y;
         int i = 0;
-        x = CH2.FM_Base - CH2.FM_Dev;  y = CH2.FM_Dev * 2;
-        for (i = 0; i < 512; i++)
-            CH2.buffer_fm[i] =  x + (y * CH2.source_buffer_fm[i * 2] / 4095.0F);
+        x = CH2.FM_Base - CH2.FM_Dev;
+        y = CH2.FM_Dev * 2;
+        for (i = 0; i < 1024; i++)
+            CH2.buffer_fm[i] =  x + (y * CH2.source_buffer_fm[i] / 4095.0F);
     }
 
 private:

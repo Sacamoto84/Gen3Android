@@ -59,7 +59,7 @@ void generator::init()
     CH2.Carrier_fr = 1000;
     CH1.AM_fr = 10.0;
     CH2.AM_fr = 10.0;
-    for(i=0;i<512;i++)
+    for(i=0;i<1024;i++)
     {
         CH1.buffer_fm[i] = 2500;
         CH2.buffer_fm[i] = 2500;
@@ -83,7 +83,7 @@ void generator::renderAudio(float *audioData, int numFrames) {
     CH2.rFM = convertHzToR(CH2.FM_mod_fr);
 
     CH1.Volume = 0.65F;
-    CH2.Volume = 0.65F;
+    CH2.Volume = 0.55F;
 
     i=0;
 
@@ -96,8 +96,7 @@ void generator::renderAudio(float *audioData, int numFrames) {
                 if (CH1.FM_EN) {
                     CH1.phase_accumulator_fm = CH1.phase_accumulator_fm + CH1.rFM;
                     CH1.phase_accumulator_carrier = CH1.phase_accumulator_carrier + (uint32_t) (
-                            (CH1.buffer_fm[CH1.phase_accumulator_fm >> 23]) * 16384.0F / 3.798F *
-                            2.0F);
+                            (CH1.buffer_fm[CH1.phase_accumulator_fm >> 22]) * 16384.0F * 1000.0f/731.0f  );
                 } else
                     CH1.phase_accumulator_carrier += CH1.rC;
 
@@ -119,8 +118,7 @@ void generator::renderAudio(float *audioData, int numFrames) {
                 if (CH2.FM_EN) {
                     CH2.phase_accumulator_fm = CH2.phase_accumulator_fm + CH2.rFM;
                     CH2.phase_accumulator_carrier = CH2.phase_accumulator_carrier + (uint32_t) (
-                            (CH2.buffer_fm[CH2.phase_accumulator_fm >> 23]) * 16384.0F / 3.798F *
-                            2.0F);
+                            (CH2.buffer_fm[CH2.phase_accumulator_fm >> 22]) * 16384.0F * 1000.0f/731.0f);
                 } else
                     CH2.phase_accumulator_carrier += CH2.rC;
 

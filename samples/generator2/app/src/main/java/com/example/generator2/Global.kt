@@ -67,10 +67,6 @@ object Global : ViewModel(){
     //Пути для отрисовки нижнего меню
     var bottomBarRoute = mutableStateOf( bottomBarEnum.HOME)
 
-
-
-
-
     fun init()
     {
 

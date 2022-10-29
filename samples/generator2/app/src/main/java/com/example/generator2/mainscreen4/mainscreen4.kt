@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import colorDarkBackground
 import com.example.generator2.Global.bottomBarRoute
+import libs.modifier.recomposeHighlighter
 
 
 //var bottomBarRoute : bottomBarEnum = bottomBarEnum.HOME
@@ -45,7 +46,7 @@ fun mainsreen4() {
             Modifier
                 .fillMaxSize()
                 .padding(bottom = it.calculateBottomPadding())
-                .verticalScroll(rememberScrollState()),
+                .verticalScroll(rememberScrollState()).recomposeHighlighter(),
             verticalArrangement = Arrangement.SpaceEvenly
         ) {
 

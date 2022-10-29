@@ -12,6 +12,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import libs.modifier.recomposeHighlighter
 
 @Composable
 fun MainscreenTextBox(str: String, modifier : Modifier = Modifier)
@@ -22,7 +23,7 @@ fun MainscreenTextBox(str: String, modifier : Modifier = Modifier)
             //.fillMaxWidth()
             .then(modifier)
             .clip(shape = RoundedCornerShape(4.dp))
-            .background(Color(0xFF13161B)),
+            .background(Color(0xFF13161B)).recomposeHighlighter(),
         contentAlignment = Alignment.Center
     ) {
         Text(

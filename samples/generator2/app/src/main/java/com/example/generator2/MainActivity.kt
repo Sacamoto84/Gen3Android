@@ -65,11 +65,13 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        Global.ch1_EN.value = true
+
         Global.componentActivity = this
         Global.contextActivity = applicationContext
         Global.init()
         Global.observe()
+
+        Global.ch1_EN.value = false
 
         Utils.ContextMainActivity = applicationContext
 
@@ -77,7 +79,6 @@ class MainActivity : ComponentActivity() {
          */
         PlaybackEngine.create(this) //.create(this)
         PlaybackEngine.start()
-
 
         onoffconfig1.pathOn = "png/switch/on.png"
         onoffconfig1.pathOff = "png/switch/off.png"
@@ -121,8 +122,6 @@ class MainActivity : ComponentActivity() {
             Global.itemlistAM.add(itemList(Global.patchMod, arrFilesMod[i], 1))
             Global.itemlistFM.add(itemList(Global.patchMod, arrFilesMod[i], 0))
         }
-
-
 
         Global.sendAlltoGen()
 

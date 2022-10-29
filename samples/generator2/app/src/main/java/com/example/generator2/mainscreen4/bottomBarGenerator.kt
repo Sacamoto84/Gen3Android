@@ -3,6 +3,7 @@ package com.example.generator2.mainscreen4
 import androidx.compose.runtime.Composable
 import com.example.generator2.Global
 import com.example.generator2.Global.bottomBarRoute
+import kotlin.system.exitProcess
 
 @Composable
 private fun Key0() {
@@ -28,10 +29,10 @@ private fun Key2() {
 }
 
 @Composable
-private fun Key3() {
+private fun Key5() {
     TemplateButtonBottomBar(
-        str = "??",
-        onClick = {  })
+        str = "Выход",
+        onClick = { exitProcess(0) })
 }
 
 @Composable
@@ -42,7 +43,7 @@ private fun Key4() {
 }
 
 @Composable
-private fun Key5() {
+private fun Key3() {
     TemplateButtonBottomBar(
         str = "Настройка",
         onClick = { bottomBarRoute.value = bottomBarEnum.SETTING })

@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.sp
 import com.example.generator2.Global
 import com.example.generator2.ui.wiget.InfinitySlider
 import com.example.generator2.ui.wiget.UIspinner
+import libs.modifier.recomposeHighlighter
 import kotlin.properties.Delegates
 
 
@@ -55,7 +56,7 @@ fun CardCarrier(str: String = "CH0") {
         backgroundColor = colorLightBackground, modifier = Modifier
             //.wrapContentHeight()
             .fillMaxWidth()
-            .padding(start = 8.dp, end = 8.dp, top = 4.dp, bottom = 4.dp),
+            .padding(start = 8.dp, end = 8.dp, top = 4.dp, bottom = 4.dp).recomposeHighlighter(),
         elevation = 5.dp
     )
     {
