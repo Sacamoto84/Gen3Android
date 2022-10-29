@@ -15,7 +15,7 @@ val colorDarkBackground = Color(0xFF13161B)
 val colorLightBackground = Color(0xFF2A2D36)
 
 //Ширина переключателей
-val ms4SwitchWidth = 64.dp
+val ms4SwitchWidth = 72.dp
 
 val sensetingSliderCr = 0.2f
 val rangeSliderCr = 600f..4000f

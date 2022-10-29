@@ -94,8 +94,9 @@ fun CardAM(str: String = "CH0") {
             }
 
             MainscreenTextBox(
-                String.format("%.1f Hz", amFr.value),
+                String.format("%.1f", amFr.value),
                 Modifier
+                    .padding(start=8.dp)
                     .height(48.dp)
                     .fillMaxWidth()
                     .weight(1f)

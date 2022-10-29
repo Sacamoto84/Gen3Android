@@ -1,5 +1,6 @@
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -99,8 +100,9 @@ fun CardFM(str: String = "CH0") {
                 })
 
             MainscreenTextBox(
-                String.format("%.1f Hz", fmFr.value),
+                String.format("%.1f", fmFr.value),
                 modifier = Modifier
+                    .padding(start = 8.dp)
                     .fillMaxHeight()
                     .fillMaxWidth()
                     .weight(1f)
@@ -108,14 +110,13 @@ fun CardFM(str: String = "CH0") {
 
             InfinitySlider(
                 value = fmFr.value,
-                sensing = if ( fmFr.value!! < 10.0F) sensetingSliderAmFm else sensetingSliderAmFm*10f,
+                sensing = if (fmFr.value!! < 10.0F) sensetingSliderAmFm else sensetingSliderAmFm * 10f,
                 range = rangeSliderAmFm,
                 onValueChange = {
                     if (str == "CH0") Global.ch1_FM_Fr.value =
                         it else Global.ch2_FM_Fr.value = it
                 },
-                modifier = modifierInfinitySlider
-                ,
+                modifier = modifierInfinitySlider,
                 vertical = true,
                 invert = true,
                 visibleText = false
@@ -148,8 +149,8 @@ fun CardFM(str: String = "CH0") {
 //            colors = SliderDefaults.colors(thumbColor = Color.LightGray)
 //        )
 /////////////////////////
-        
-        
+
+
         //База 
         Row(
             Modifier
@@ -158,34 +159,45 @@ fun CardFM(str: String = "CH0") {
             verticalAlignment = Alignment.CenterVertically
         )
         {
-            Text(
-                text = "  База",
-                color = Color.LightGray,
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Bold,
+
+            Box(
                 modifier = Modifier
+                    .padding(start=4.dp)
+                    .height(48.dp)
                     .width(ms4SwitchWidth)
+                    //.border(0.dp, Color.White, RoundedCornerShape(8.dp))
+                    .clip(RoundedCornerShape(8.dp))
+                    .background(colorDarkBackground)
+                    .clickable { }
+                , contentAlignment = Alignment.Center
+            ) {
+                Text("Сохранить", fontSize = 12.sp, color = Color.LightGray )
+            }
+
+
+
+
+
+
+            MainscreenTextBoxPlus2Line(
+                String.format("%d", fmBase.value!!.toInt()),
+                String.format("%d", fmBase.value!!.toInt() + fmDev.value!!.toInt()),
+                String.format("%d", fmBase.value!!.toInt() - fmDev.value!!.toInt()),
+                Modifier.padding(start=4.dp)
+                    .fillMaxHeight()
                     .fillMaxWidth()
                     .weight(1f)
             )
 
-            MainscreenTextBox(
-                String.format("%d", fmBase.value!!.toInt()),
-                Modifier
-                    .height(48.dp)
-                    .width(160.dp)
-            )
-
             InfinitySlider(
                 value = fmBase.value,
-                sensing = sensetingSliderFmBase*8,
+                sensing = sensetingSliderFmBase * 8,
                 range = rangeSliderFmBase,
                 onValueChange = {
                     if (str == "CH0") Global.ch1_FM_Base.value =
                         it else Global.ch2_FM_Base.value = it
                 },
-                modifier = modifierInfinitySlider
-                ,
+                modifier = modifierInfinitySlider,
                 vertical = true,
                 invert = true,
                 visibleText = false
@@ -200,8 +212,7 @@ fun CardFM(str: String = "CH0") {
                     if (str == "CH0") Global.ch1_FM_Base.value =
                         it else Global.ch2_FM_Base.value = it
                 },
-                modifier = modifierInfinitySlider
-                    ,
+                modifier = modifierInfinitySlider,
                 vertical = true,
                 invert = true,
                 visibleText = false
@@ -210,57 +221,59 @@ fun CardFM(str: String = "CH0") {
 
         }
 
-//        Slider(
-//            valueRange = rangeSliderFmBase,
-//            value = fmBase.value!!,
-//            onValueChange = {
-//                if (str == "CH0") Global.ch1_FM_Base.value =
-//                    it else Global.ch2_FM_Base.value = it
-//            },
-//            modifier = Modifier
-//                .fillMaxWidth()
-//                .padding(start = 8.dp, end = 8.dp),
-//            colors = SliderDefaults.colors(thumbColor = Color.LightGray),
-//            steps = stepSliderFmBase
-//        )
-
-
 ////////
         Row(
             Modifier
-                .padding(top = 8.dp, start = 8.dp, end = 8.dp)
+                .padding(top = 8.dp, start = 0.dp, end = 8.dp)
                 .height(48.dp),
             verticalAlignment = Alignment.CenterVertically
         )
         {
-            Text(
-                text = " Девиация ",
-                color = Color.LightGray,
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Bold,
+//            Text(
+//                text = "  ",
+//                color = Color.LightGray,
+//                fontSize = 18.sp,
+//                fontWeight = FontWeight.Bold,
+//                modifier = Modifier
+//                    .width(ms4SwitchWidth)
+//
+//                    //.weight(1f)
+//            )
+
+
+            Box(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f)
-            )
+                    .padding(start=4.dp)
+                    .height(48.dp)
+                    .width(ms4SwitchWidth)
+                    //.border(1.dp, Color.White, RoundedCornerShape(8.dp))
+                    .clip(RoundedCornerShape(8.dp))
+                    .background(colorDarkBackground)
+                    .clickable { }
+                , contentAlignment = Alignment.Center
+            ) {
+                Text("Загрузить", fontSize = 12.sp, color = Color.LightGray )
+            }
 
             MainscreenTextBox(
-                String.format("%d", fmDev.value!!.toInt()),
+                String.format("± %d", fmDev.value!!.toInt()),
                 Modifier
-                    .height(48.dp)
-                    .width(160.dp)
+                    .padding(start=4.dp)
+                    .fillMaxHeight()
+                    .fillMaxWidth()
+                    .weight(1f)
             )
 
 
             InfinitySlider(
                 value = fmDev.value,
-                sensing = sensetingSliderFmDev*8,
+                sensing = sensetingSliderFmDev * 8,
                 range = rangeSliderFmDev,
                 onValueChange = {
                     if (str == "CH0") Global.ch1_FM_Dev.value =
                         it else Global.ch2_FM_Dev.value = it
                 },
-                modifier = modifierInfinitySlider
-                ,
+                modifier = modifierInfinitySlider,
                 vertical = true,
                 invert = true,
                 visibleText = false
@@ -274,8 +287,7 @@ fun CardFM(str: String = "CH0") {
                     if (str == "CH0") Global.ch1_FM_Dev.value =
                         it else Global.ch2_FM_Dev.value = it
                 },
-                modifier = modifierInfinitySlider
-                    ,
+                modifier = modifierInfinitySlider,
                 vertical = true,
                 invert = true,
                 visibleText = false
@@ -284,7 +296,7 @@ fun CardFM(str: String = "CH0") {
 
         }
 
-        
+
         Spacer(modifier = Modifier.height(8.dp))
 //        Slider(
 //            valueRange = rangeSliderFmDev,

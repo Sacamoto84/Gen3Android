@@ -40,6 +40,7 @@ import com.example.generator2.ui.wiget.UImodifier.coloredShadow2
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import libs.KeepScreenOn
 import com.example.generator2.mainscreen4.mainsreen4
+import libs.modifier.recomposeHighlighter
 
 fun valuesList() = listOf(0f, 100f)
 
@@ -596,58 +597,6 @@ class MainActivity : ComponentActivity() {
 //                }
             }
         }
-    }
-}
-
-
-@Composable
-fun Greeting() {
-
-    Text(text = "Hello ${Global.ch1_Carrier_Filename}!")
-    Text(text = "${Global.ch1_EN}!")
-    Button(onClick = {
-        Global.ch1_EN.value = true
-        Global.ch1_Carrier_Filename.value = "on"
-        Log.d("---", "on")
-        //PlaybackEngine.CH_EN(0, Global.ch1_EN)
-    })
-    {
-        Text(text = "On")
-    }
-    Button(
-        onClick = {
-            Global.ch1_EN.value = false
-            Global.ch1_Carrier_Filename.value = "off"
-            Log.d("---", "off")
-            //PlaybackEngine.CH_EN(0, Global.ch1_EN)
-        },
-        modifier = Modifier.recomposeHighlighter()
-    )
-    {
-        Text(text = "Off")
-    }
-}
-
-@Composable
-fun Greeting1() {
-    Text(text = "${Global.ch1_AM_EN}!")
-}
-
-@Composable
-fun GreetingAM() {
-    Button(onClick = {
-        //Global.ch1_AM_EN = true
-        //PlaybackEngine.CH_EN(0, Global.ch1_AM_EN)
-    })
-    {
-        Text(text = "On")
-    }
-    Button(onClick = {
-        //Global.ch1_AM_EN = false
-        //PlaybackEngine.CH_EN(0, Global.ch1_AM_EN)
-    })
-    {
-        Text(text = "Off")
     }
 }
 

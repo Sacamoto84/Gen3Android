@@ -46,7 +46,7 @@ fun mainsreen4() {
             Modifier
                 .fillMaxSize()
                 .padding(bottom = it.calculateBottomPadding())
-                .verticalScroll(rememberScrollState()).recomposeHighlighter(),
+                .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.SpaceEvenly
         ) {
 

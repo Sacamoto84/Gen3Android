@@ -56,8 +56,8 @@ fun CardCarrier(str: String = "CH0") {
         backgroundColor = colorLightBackground, modifier = Modifier
             //.wrapContentHeight()
             .fillMaxWidth()
-            .padding(start = 8.dp, end = 8.dp, top = 4.dp, bottom = 4.dp).recomposeHighlighter(),
-        elevation = 5.dp
+            .padding(start = 8.dp, end = 8.dp, top = 4.dp, bottom = 4.dp),
+        elevation = 0.dp
     )
     {
 
@@ -92,6 +92,7 @@ fun CardCarrier(str: String = "CH0") {
                 MainscreenTextBox(
                     str = String.format("%d", carrierFr.value!!.toInt()),
                     Modifier
+                        .padding(start=8.dp)
                         .height(48.dp)
                         .fillMaxWidth()
                         .weight(1f)
